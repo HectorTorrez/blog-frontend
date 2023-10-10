@@ -3,10 +3,10 @@ import { Navbar } from './components/Navbar'
 
 export const App = (): JSX.Element => {
   return (
-    <section className='dark:bg-black'>
+    <section className='dark:bg-black h-screen'>
       <Navbar/>
 
-      <main className='max-w-screen-xl flex flex-wrap gap-y-10 items-center justify-between mx-auto mt-10'>
+      <main className='max-w-screen-xl flex justify-center flex-wrap gap-10 items-center  mx-auto mt-10'>
         <BlogCard/>
         <BlogCard/>
         <BlogCard/>
