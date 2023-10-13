@@ -1,27 +1,23 @@
 import { useEffect, useState } from 'react'
 
 export const DarkModeToggle = (): JSX.Element => {
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(() => {
+    const isDarkMode = localStorage.getItem('darkMode')
+    return isDarkMode === 'true'
+  })
 
   useEffect(() => {
-    // Check if dark mode is set in localStorage
-    const isDarkMode = localStorage.getItem('darkMode') === 'true'
-    setDarkMode(isDarkMode)
+    localStorage.setItem('darkMode', darkMode.toString())
+    document.body.classList.toggle('dark', darkMode)
+  }, [darkMode])
 
-    // Set dark mode on the body element
-    if (isDarkMode) {
+  useEffect(() => {
+    if (darkMode) {
       document.body.classList.add('dark')
     } else {
       document.body.classList.remove('dark')
     }
   }, [])
-
-  useEffect(() => {
-    // Update localStorage when dark mode changes
-    localStorage.setItem('darkMode', darkMode.toString())
-    // Toggle the 'dark' class on the body element
-    document.body.classList.toggle('dark', darkMode)
-  }, [darkMode])
 
   const toggleDarkMode = (): void => {
     setDarkMode((prevDarkMode) => !prevDarkMode)
