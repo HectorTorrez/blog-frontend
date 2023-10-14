@@ -10,6 +10,7 @@ import { Login } from './components/Login.tsx'
 import { Register } from './components/Register.tsx'
 import { FormPost } from './components/FormPost.tsx'
 import { Blog } from './components/Blog.tsx'
+import { LoginProvider } from './context/LoginContext.tsx'
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,9 @@ const rootElement = document.getElementById('root')
 if (rootElement !== null) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <RouterProvider router={router}/>
+      <LoginProvider>
+        <RouterProvider router={router}/>
+      </LoginProvider>
     </React.StrictMode>
   )
 }

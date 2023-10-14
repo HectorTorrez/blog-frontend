@@ -11,3 +11,12 @@ export interface User {
   name: string
   id: string
 }
+
+export interface LoginCredentials {
+  username: string
+  password: string
+}
+
+export interface LoginWithToken extends LoginCredentials {
+  token: string
+}
