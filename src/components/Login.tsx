@@ -1,8 +1,42 @@
 import { Link } from 'react-router-dom'
 import { Email, Lock } from './Icons'
 import { Navbar } from './Navbar'
+import { login } from '../services/blogServices'
+import { useState, useContext } from 'react'
+import { LoginContext } from '../context/LoginContext'
 
 export const Login = (): JSX.Element => {
+  const { setUser } = useContext(LoginContext)
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: ''
+  })
+
+  //   const navigate = useNavigate()
+
+  const handleChange = (e: EventTarget & HTMLInputElement): void => {
+    const { name, value } = e
+    setCredentials({
+      ...credentials,
+      [name]: value
+    })
+  }
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault()
+    try {
+      const getUser = await login({ username: credentials.username, password: credentials.password })
+      setUser(getUser)
+
+      // TODO NAVIGATE TO ANOTHER PAGE IF IN THE RESPONSE COME THE TOKEN
+    //   if (getUser) {
+    //     navigate('/')
+    //   }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
 <section className="bg-gray-50 dark:bg-gray-900 ">
     <Navbar/>
@@ -13,21 +47,21 @@ export const Login = (): JSX.Element => {
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Login
                 </h1>
-                <form className="space-y-4 md:space-y-6" action="#">
-                <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email
+                <form onSubmit={(e) => { void handleLogin(e) }} className="space-y-4 md:space-y-6" action="#">
+                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your username
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                            <Email/>
                         </div>
-                        <input type="text" id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@email.com"/>
+                        <input type="text" onChange={(e) => { handleChange(e.target) }} value={credentials.username} id="username" name='username' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username"/>
                     </div>
                 </label>
-                <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Password
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Password
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                            <Lock/>
                         </div>
-                        <input type="text" id="email-address-icon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••"/>
+                        <input type="password" onChange={(e) => { handleChange(e.target) }} value={credentials.password} id="password" name='password' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••"/>
                     </div>
                 </label>
 
@@ -39,9 +73,9 @@ export const Login = (): JSX.Element => {
                           <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
                         </div>
                     </div>
-                    <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                    <button type="submit" className="w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Create an account</button>
                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                    Don’t have an account yet?  <Link to='/register' className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
+                    Don’t have an account yet?  <Link to='/register' className="font-medium text-gray-600 hover:underline dark:text-gray-500">Sign up</Link>
                     </p>
                 </form>
             </div>
