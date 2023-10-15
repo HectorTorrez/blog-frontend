@@ -20,3 +20,10 @@ export interface LoginCredentials {
 export interface LoginWithToken extends LoginCredentials {
   token: string
 }
+
+export interface BlogFormValues {
+  title: string
+  author: string
+  blogText: string
+  url: string
+}

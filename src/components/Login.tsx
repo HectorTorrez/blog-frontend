@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Email, Lock } from './Icons'
 import { Navbar } from './Navbar'
-import { login } from '../services/blogServices'
+import { login, setToken } from '../services/blogServices'
 import { useState, useContext } from 'react'
 import { LoginContext } from '../context/LoginContext'
 
@@ -12,7 +12,7 @@ export const Login = (): JSX.Element => {
     password: ''
   })
 
-  //   const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleChange = (e: EventTarget & HTMLInputElement): void => {
     const { name, value } = e
@@ -27,11 +27,10 @@ export const Login = (): JSX.Element => {
     try {
       const getUser = await login({ username: credentials.username, password: credentials.password })
       setUser(getUser)
-
-      // TODO NAVIGATE TO ANOTHER PAGE IF IN THE RESPONSE COME THE TOKEN
-    //   if (getUser) {
-    //     navigate('/')
-    //   }
+      setToken(getUser.token)
+      if (getUser.token.length > 0) {
+        navigate('/')
+      }
     } catch (error) {
       console.log(error)
     }

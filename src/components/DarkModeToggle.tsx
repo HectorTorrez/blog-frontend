@@ -27,7 +27,6 @@ export const DarkModeToggle = (): JSX.Element => {
     className="rounded-full w-8 h-8 bg-gray-300 dark:bg-gray-700"
     onClick={toggleDarkMode}
   >
-    {/* You can use icons or text to indicate the mode */}
     {darkMode
       ? (
       <span className="text-white">🌙</span>
