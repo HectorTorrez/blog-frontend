@@ -1,12 +1,12 @@
-import { type LoginCredentials, type Blog, type LoginWithToken } from '../types/blogsTypes'
+import { type LoginCredentials, type Blog, type LoginWithToken, type BlogFormValues } from '../types/blogsTypes'
 
 const BASE_URL = 'http://localhost:3003'
 
-// let token: string | null = null
+let token: string | null = null
 
-// export const setToken = (newToken: string): void => {
-//   token = `Bearer ${newToken}`
-// }
+export const setToken = (newToken: string): void => {
+  token = `bearer ${newToken}`
+}
 
 export const getBlogs = async (): Promise<Blog[]> => {
   const response = await fetch(`${BASE_URL}/api/blogs`)
@@ -29,17 +29,18 @@ export const login = async (credentials: LoginCredentials): Promise<LoginWithTok
   return await response.json()
 }
 
-// export const createBlog = async (credentials: LoginCredentials) => {
-//   if (token != null) {
-//     const response = await fetch(`${BASE_URL}/api/blogs`, {
-//       method: 'POST',
-//       headers: {
-//         Authorization: token
-//       },
-//       body: JSON.stringify(credentials)
+export const createBlog = async (blog: BlogFormValues) => {
+  if (token != null) {
+    const response = await fetch(`${BASE_URL}/api/blogs`, {
+      method: 'POST',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(blog)
 
-//     })
-//     console.log(response)
-//     return await response.json()
-//   }
-// }
+    })
+    console.log(response)
+    return await response.json()
+  }
+}
