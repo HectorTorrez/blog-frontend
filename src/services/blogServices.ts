@@ -1,4 +1,4 @@
-import { type LoginCredentials, type Blog, type LoginWithToken, type BlogFormValues } from '../types/blogsTypes'
+import { type LoginCredentials, type Blog, type LoginWithToken, type createUserCredentials, type BlogFormValues } from '../types/blogsTypes'
 
 const BASE_URL = 'http://localhost:3003'
 
@@ -29,7 +29,22 @@ export const login = async (credentials: LoginCredentials): Promise<LoginWithTok
   return await response.json()
 }
 
-export const createBlog = async (blog: BlogFormValues) => {
+export const createUser = async (credentials: createUserCredentials): Promise<any> => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+    return await response.json()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const createBlog = async (blog: BlogFormValues): Promise<any> => {
   if (token != null) {
     const response = await fetch(`${BASE_URL}/api/blogs`, {
       method: 'POST',
@@ -40,7 +55,6 @@ export const createBlog = async (blog: BlogFormValues) => {
       body: JSON.stringify(blog)
 
     })
-    console.log(response)
     return await response.json()
   }
 }

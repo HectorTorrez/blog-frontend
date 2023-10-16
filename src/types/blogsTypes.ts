@@ -17,6 +17,10 @@ export interface LoginCredentials {
   password: string
 }
 
+export interface createUserCredentials extends LoginCredentials {
+  name: string
+}
+
 export interface LoginWithToken extends LoginCredentials {
   token: string
 }
