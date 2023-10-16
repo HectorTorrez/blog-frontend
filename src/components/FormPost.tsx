@@ -1,9 +1,9 @@
+import { useNavigate } from 'react-router-dom'
 import { LoginContext } from '../context/LoginContext'
-import { useLoginContext } from '../hooks/useLoginContext'
 import { createBlog, setToken } from '../services/blogServices'
 import { type BlogFormValues } from '../types/blogsTypes'
 import { Navbar } from './Navbar'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 export const FormPost = (): JSX.Element => {
   const [blog, setBlog] = useState<BlogFormValues>({
@@ -13,7 +13,8 @@ export const FormPost = (): JSX.Element => {
     blogText: ''
   })
 
-  const { user } = useLoginContext(LoginContext)
+  const { user } = useContext(LoginContext)
+  const navigate = useNavigate()
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     setBlog({ ...blog, [event.target.name]: event.target.value })
@@ -24,6 +25,9 @@ export const FormPost = (): JSX.Element => {
     try {
       setToken(user?.token as string)
       await createBlog(blog)
+      if (user?.token !== undefined) {
+        navigate('/')
+      }
     } catch (error) {
       console.log(error)
     }

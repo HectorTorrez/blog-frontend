@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { DarkModeToggle } from './DarkModeToggle'
 import { MobileNavIcon } from './Icons'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useLoginContext } from '../hooks/useLoginContext'
 import { LoginContext } from '../context/LoginContext'
 
@@ -9,6 +9,7 @@ export const Navbar = (): JSX.Element => {
   const [showNavbar, setShowNavbar] = useState(false)
 
   const { user, setUser } = useLoginContext(LoginContext)
+  const navigate = useNavigate()
 
   const activeLink = 'block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
   const inactiveLink = 'block py-2 pl-3 pr-4 text-blue bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 dark:text-white md:dark:text-white-500'
@@ -16,6 +17,7 @@ export const Navbar = (): JSX.Element => {
   const handleLogout = (): void => {
     localStorage.removeItem('user')
     setUser(null)
+    navigate('/')
   }
 
   return (

@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { BlogCard } from './components/BlogCard'
 import { Navbar } from './components/Navbar'
 import { getBlogs, setToken } from './services/blogServices'
 import { type Blog } from './types/blogsTypes'
 import { Link } from 'react-router-dom'
 import { LoginContext } from './context/LoginContext'
-import { useLoginContext } from './hooks/useLoginContext'
 
 export const App = (): JSX.Element => {
   const [blogs, setBlogs] = useState<Blog[]>([])
 
-  const { user } = useLoginContext(LoginContext)
+  const { user, setUser } = useContext(LoginContext)
 
   const fetchData = async (): Promise<void> => {
     try {
@@ -28,6 +27,10 @@ export const App = (): JSX.Element => {
       setToken(user.token)
     }
   }, [])
+  setTimeout(() => {
+    localStorage.removeItem('user')
+    setUser(null)
+  }, 300000)
 
   return (
     <section className='dark:bg-black min-h-screen'>
