@@ -4,6 +4,7 @@ import { MobileNavIcon } from './Icons'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useLoginContext } from '../hooks/useLoginContext'
 import { LoginContext } from '../context/LoginContext'
+import { SweetAlertConfirm } from '../utils'
 
 export const Navbar = (): JSX.Element => {
   const [showNavbar, setShowNavbar] = useState(false)
@@ -14,10 +15,23 @@ export const Navbar = (): JSX.Element => {
   const activeLink = 'block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
   const inactiveLink = 'block py-2 pl-3 pr-4 text-blue bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 dark:text-white md:dark:text-white-500'
 
-  const handleLogout = (): void => {
-    localStorage.removeItem('user')
-    setUser(null)
-    navigate('/')
+  const handleLogout = async (): Promise<void> => {
+    const response = await SweetAlertConfirm({
+      title: 'are you Sure?',
+      text: 'You wont be able to revert this?',
+      icon: 'warning',
+      confirmButtonText: 'Confirm',
+      titleFire: 'Loggedout',
+      bodyFire: 'you have been loggedout',
+      iconFire: 'success'
+
+    })
+
+    if (response.isConfirmed) {
+      localStorage.removeItem('user')
+      setUser(null)
+      navigate('/')
+    }
   }
 
   return (
@@ -48,7 +62,9 @@ export const Navbar = (): JSX.Element => {
                 )
               : (
           <li>
-            <button onClick={handleLogout} className='block py-2 pl-3 pr-4 text-blue bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 dark:text-white md:dark:text-white-500' type="button">Logout</button>
+            <button onClick={() => {
+              void handleLogout
+            }} className='block py-2 pl-3 pr-4 text-blue bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 dark:text-white md:dark:text-white-500' type="button">Logout</button>
           </li>
                 )
           }
