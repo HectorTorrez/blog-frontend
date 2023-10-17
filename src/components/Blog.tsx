@@ -19,7 +19,7 @@ export const Blog = (): JSX.Element => {
   return (
     <>
     <Navbar/>
-    <section className='flex  flex-col items-center gap-y-10 dark:text-white dark:bg-gray-900 min-h-screen'>
+    <section className='flex  flex-col items-center gap-y-10 dark:text-white dark:bg-gray-900 min-h-[calc(100vh-65px)]'>
       <article className='text-center p-4 '>
       <h2 className='font-bold text-6xl'>{blog?.title}</h2>
       <p className='font-semibold text-xl text-gray-500'>{blog?.author}</p>
