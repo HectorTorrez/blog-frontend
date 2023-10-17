@@ -6,9 +6,23 @@ export interface Blog {
   id: string
 }
 
+export interface UserForBlog {
+  username: string
+  name: string
+  id: string
+}
+
 export interface User {
   username: string
   name: string
+  blogs: Blog[]
+  id: string
+}
+
+export interface BlogForUser {
+  title: string
+  author: string
+  blogText: string
   id: string
 }
 

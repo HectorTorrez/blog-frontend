@@ -1,4 +1,4 @@
-import { type LoginCredentials, type Blog, type LoginWithToken, type createUserCredentials, type BlogFormValues } from '../types/blogsTypes'
+import { type LoginCredentials, type Blog, type LoginWithToken, type createUserCredentials, type BlogFormValues, type User } from '../types/blogsTypes'
 
 const BASE_URL = 'http://localhost:3003'
 
@@ -29,7 +29,7 @@ export const login = async (credentials: LoginCredentials): Promise<LoginWithTok
   return await response.json()
 }
 
-export const createUser = async (credentials: createUserCredentials): Promise<any> => {
+export const createUser = async (credentials: createUserCredentials): Promise<User | undefined> => {
   try {
     const response = await fetch(`${BASE_URL}/api/users`, {
       method: 'POST',
