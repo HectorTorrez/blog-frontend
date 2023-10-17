@@ -22,16 +22,13 @@ export const Register = (): JSX.Element => {
     })
   }
 
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault()
+  const handleRegister = async (): Promise<void> => {
     try {
       if (userCredentials.password !== userCredentials.confirmPassword) { console.error('password arent the same') }
       const response = await createUser({ name: userCredentials.name, username: userCredentials.username, password: userCredentials.password })
       console.log(response)
-
-      // TODO navigate when response its true and create type for this response
-      if (response) {
-        navigate('/')
+      if ((response?.id) != null) {
+        navigate('/login')
       }
     } catch (error) {
       console.log(error)
@@ -48,7 +45,10 @@ export const Register = (): JSX.Element => {
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Create and account
                 </h1>
-                <form className="space-y-4 md:space-y-6" onSubmit={handleRegister}>
+                <form className="space-y-4 md:space-y-6" onSubmit={(e) => {
+                  e.preventDefault()
+                  void handleRegister()
+                }}>
                 <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">

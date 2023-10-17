@@ -20,8 +20,7 @@ export const FormPost = (): JSX.Element => {
     setBlog({ ...blog, [event.target.name]: event.target.value })
   }
 
-  const handlePostBlog = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault()
+  const handlePostBlog = async (): Promise<void> => {
     try {
       setToken(user?.token as string)
       await createBlog(blog)
@@ -37,7 +36,10 @@ export const FormPost = (): JSX.Element => {
         <Navbar/>
     <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
       <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new blog</h2>
-      <form onSubmit={handlePostBlog}>
+      <form onSubmit={(e) => {
+        e.preventDefault()
+        void handlePostBlog()
+      }}>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div className="sm:col-span-2">
                   <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
