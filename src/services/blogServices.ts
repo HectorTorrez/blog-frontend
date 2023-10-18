@@ -54,3 +54,13 @@ export const createBlog = async (blog: BlogFormValues): Promise<any> => {
     return await response.json()
   }
 }
+
+export const deleteBlog = async (id: string): Promise<number> => {
+  const response = await fetch(`${BASE_URL}/api/blogs/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  return response.status
+}

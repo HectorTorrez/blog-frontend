@@ -55,17 +55,24 @@ export const Navbar = (): JSX.Element => {
           {
             user === null
               ? (
-          <li>
-            <NavLink to='/login' className={({ isActive }) => isActive ? activeLink : inactiveLink} >Login</NavLink>
-          </li>
+                <>
+                  <li>
+                    <NavLink to='/login' className={({ isActive }) => isActive ? activeLink : inactiveLink} >Login</NavLink>
+                  </li>
+                </>
 
                 )
               : (
-          <li>
-            <button onClick={() => {
-              void handleLogout()
-            }} className='block py-2 pl-3 pr-4 text-blue bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 dark:text-white md:dark:text-white-500' type="button">Logout</button>
-          </li>
+                <>
+                  <li>
+                    <NavLink to='/myblogs' className={({ isActive }) => isActive ? activeLink : inactiveLink} >My Blogs</NavLink>
+                  </li>
+                  <li>
+                    <button onClick={() => {
+                      void handleLogout()
+                    }} className='block py-2 pl-3 pr-4 text-blue bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 dark:text-white md:dark:text-white-500' type="button">Logout</button>
+                  </li>
+            </>
                 )
           }
         </ul>
