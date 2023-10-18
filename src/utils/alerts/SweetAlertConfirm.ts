@@ -14,8 +14,8 @@ export const SweetAlertConfirm = async ({ title, text, icon, confirmButtonText, 
     text,
     icon,
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
+    confirmButtonColor: '#2563eb',
+    cancelButtonColor: '#ff2100',
     confirmButtonText
   }).then((result) => {
     if (result.isConfirmed) {

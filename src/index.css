@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.error-image {
+    width: 200px;
+    height: 200px;
+    background-color: #007BFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.error-image::before {
+    content: "404";
+    color: #fff;
+    font-size: 48px;
+    font-weight: bold;
+}
