@@ -4,6 +4,7 @@ import { Navbar } from './Navbar'
 import { login, setToken } from '../services/blogServices'
 import { useState, useContext } from 'react'
 import { LoginContext } from '../context/LoginContext'
+import { Alert } from './Alert'
 
 export const Login = (): JSX.Element => {
   const { setUser } = useContext(LoginContext)
@@ -11,6 +12,8 @@ export const Login = (): JSX.Element => {
     username: '',
     password: ''
   })
+
+  const [error, setError] = useState('')
 
   const navigate = useNavigate()
 
@@ -26,13 +29,16 @@ export const Login = (): JSX.Element => {
     e.preventDefault()
     try {
       const getUser = await login({ username: credentials.username, password: credentials.password })
+      if (getUser.error !== null) {
+        setError(getUser.error)
+      }
       setUser(getUser)
       setToken(getUser.token)
-      if (getUser.token.length > 0) {
+      if (getUser.token?.length > 0) {
         navigate('/')
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -40,9 +46,11 @@ export const Login = (): JSX.Element => {
 <section className="bg-gray-50 dark:bg-gray-900 ">
     <Navbar/>
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0 ">
-
         <div className="w-full bg-white mb-[150px] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+      {
+        (error.length > 0) ? <Alert text={error} type='error'/> : null
+      }
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Login
                 </h1>
@@ -78,7 +86,7 @@ export const Login = (): JSX.Element => {
                     </p>
                 </form>
             </div>
-        </div>
+        A</div>
     </div>
   </section>
 

@@ -3,6 +3,7 @@ import { Email, Lock, User } from './Icons'
 import { Navbar } from './Navbar'
 import { useState } from 'react'
 import { createUser } from '../services/blogServices'
+import { Alert } from './Alert'
 
 export const Register = (): JSX.Element => {
   const [userCredentials, setUserCredentials] = useState({
@@ -11,6 +12,8 @@ export const Register = (): JSX.Element => {
     password: '',
     confirmPassword: ''
   })
+
+  const [error, setError] = useState('')
 
   const navigate = useNavigate()
 
@@ -24,9 +27,8 @@ export const Register = (): JSX.Element => {
 
   const handleRegister = async (): Promise<void> => {
     try {
-      if (userCredentials.password !== userCredentials.confirmPassword) { console.error('password arent the same') }
+      if (userCredentials.password !== userCredentials.confirmPassword) { setError('the password is not the same'); return }
       const response = await createUser({ name: userCredentials.name, username: userCredentials.username, password: userCredentials.password })
-      console.log(response)
       if ((response?.id) != null) {
         navigate('/login')
       }
@@ -42,6 +44,9 @@ export const Register = (): JSX.Element => {
 
         <div className="w-full bg-white mb-[150px] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          {
+            error.length > 0 ? <Alert text={error} type='error'/> : null
+          }
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Create and account
                 </h1>
@@ -54,7 +59,7 @@ export const Register = (): JSX.Element => {
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                            <User/>
                         </div>
-                        <input type="text" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.name} id="name" name='name' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Antonio"/>
+                        <input type="text" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.name} id="name" name='name' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Antonio" required minLength={3}/>
                     </div>
                 </label>
                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Username
@@ -62,7 +67,7 @@ export const Register = (): JSX.Element => {
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                            <Email/>
                         </div>
-                        <input type="text" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.username} id="username" name='username' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username"/>
+                        <input type="text" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.username} id="username" name='username' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username" required minLength={3}/>
                     </div>
                 </label>
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Password
@@ -70,7 +75,7 @@ export const Register = (): JSX.Element => {
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                            <Lock/>
                         </div>
-                        <input type="password" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.password} id="password" name='password' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••"/>
+                        <input type="password" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.password} id="password" name='password' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••" required minLength={5}/>
                     </div>
                 </label>
                 <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm your Password
@@ -78,7 +83,7 @@ export const Register = (): JSX.Element => {
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                            <Lock/>
                         </div>
-                        <input type="password" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.confirmPassword} id="confirmPassword" name='confirmPassword' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••"/>
+                        <input type="password" onChange={(e) => { hanndleChange(e.target) }} value={userCredentials.confirmPassword} id="confirmPassword" name='confirmPassword' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••" required minLength={5}/>
                     </div>
                 </label>
                     <div className="flex items-start">
@@ -94,7 +99,7 @@ export const Register = (): JSX.Element => {
                         Already have an account? <Link to='/login' className="font-medium text-gray-600 hover:underline dark:text-gray-500">Login here</Link>
                     </p>
                 </form>
-            </div>
+            A</div>
         </div>
     </div>
   </section>
