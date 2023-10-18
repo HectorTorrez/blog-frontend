@@ -13,10 +13,12 @@ export interface UserForBlog {
 }
 
 export interface User {
+  includes: (arg0: string) => any
   username: string
   name: string
   blogs: Blog[]
   id: string
+  error: string
 }
 
 export interface BlogForUser {
@@ -37,6 +39,7 @@ export interface createUserCredentials extends LoginCredentials {
 
 export interface LoginWithToken extends LoginCredentials {
   token: string
+  error: string
 }
 
 export interface BlogFormValues {

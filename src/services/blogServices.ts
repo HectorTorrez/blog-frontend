@@ -29,19 +29,15 @@ export const login = async (credentials: LoginCredentials): Promise<LoginWithTok
   return await response.json()
 }
 
-export const createUser = async (credentials: createUserCredentials): Promise<User | undefined> => {
-  try {
-    const response = await fetch(`${BASE_URL}/api/users`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-    return await response.json()
-  } catch (error) {
-    console.error(error)
-  }
+export const createUser = async (credentials: createUserCredentials): Promise<User> => {
+  const response = await fetch(`${BASE_URL}/api/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+  return await response.json()
 }
 
 export const createBlog = async (blog: BlogFormValues): Promise<any> => {

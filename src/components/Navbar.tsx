@@ -17,8 +17,8 @@ export const Navbar = (): JSX.Element => {
 
   const handleLogout = async (): Promise<void> => {
     const response = await SweetAlertConfirm({
-      title: 'are you Sure?',
-      text: 'You wont be able to revert this?',
+      title: 'Are you sure?',
+      text: 'You wont be able to revert this',
       icon: 'warning',
       confirmButtonText: 'Confirm',
       titleFire: 'Loggedout',
@@ -63,7 +63,7 @@ export const Navbar = (): JSX.Element => {
               : (
           <li>
             <button onClick={() => {
-              void handleLogout
+              void handleLogout()
             }} className='block py-2 pl-3 pr-4 text-blue bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 dark:text-white md:dark:text-white-500' type="button">Logout</button>
           </li>
                 )
