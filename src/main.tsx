@@ -11,11 +11,13 @@ import { Register } from './components/Register.tsx'
 import { FormPost } from './components/FormPost.tsx'
 import { Blog } from './components/Blog.tsx'
 import { LoginProvider } from './context/LoginContext.tsx'
+import { Error } from './pages/Error.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>
+    element: <App/>,
+    errorElement: <Error/>
   },
   {
     path: 'blogs/:blogId',
