@@ -12,12 +12,17 @@ import { FormPost } from './components/FormPost.tsx'
 import { Blog } from './components/Blog.tsx'
 import { LoginProvider } from './context/LoginContext.tsx'
 import { Error } from './pages/Error.tsx'
+import { MyBlogs } from './pages/MyBlogs.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App/>,
     errorElement: <Error/>
+  },
+  {
+    path: '/myblogs',
+    element: <MyBlogs/>
   },
   {
     path: 'blogs/:blogId',

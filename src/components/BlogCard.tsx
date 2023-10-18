@@ -1,21 +1,42 @@
+import { useContext } from 'react'
+import { LoginContext } from '../context/LoginContext'
 import { type Blog } from '../types/blogsTypes'
 import { firstLetterUpperCase } from '../utils/firstLetterUpperCase'
-import { RightArrow } from './Icons'
+import { Delete, RightArrow } from './Icons'
 import { Link } from 'react-router-dom'
+import { deleteBlog } from '../services/blogServices'
 
 interface BlogCardProps {
   blog: Blog
 }
 
 export const BlogCard = ({ blog }: BlogCardProps): JSX.Element => {
-  const { title, author, blogText, id } = blog
+  const { title, author, blogText, id, user: BlogUser } = blog
+  const { user } = useContext(LoginContext)
+
+  const userId = BlogUser.map(user => {
+    return user.username
+  })
+
+  const handleDelete = async (id: string): Promise<void> => {
+    try {
+      const response = await deleteBlog(id)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
 
-    <div className=" bg-white border mx-2 border-gray-200 rounded-lg shadow sm:w-screen md:max-w-sm dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-            {/* <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" /> */}
-        </a>
-        <div className="p-5 min-w-[236px]">
+    <section className=" bg-white border mx-2 border-gray-200 rounded-lg shadow sm:w-screen md:max-w-sm dark:bg-gray-800 dark:border-gray-700">
+        <header className='text-red-600 flex justify-end mx-3 mt-3'>
+          <button onClick={() => { void handleDelete(id) }}>
+          {
+            (user?.username) === userId[0] ? <Delete/> : null
+          }
+          </button>
+        </header>
+        <div className="p-5 pt-0 min-w-[236px]">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{blogText}</p>
             <p className="mb-3 font-bold text-gray-500 dark:text-gray-400">{firstLetterUpperCase(author)}</p>
@@ -25,7 +46,7 @@ export const BlogCard = ({ blog }: BlogCardProps): JSX.Element => {
                 <RightArrow/>
             </Link>
         </div>
-    </div>
+    </section>
 
   )
 }
