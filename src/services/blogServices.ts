@@ -18,6 +18,11 @@ export const getBlog = async (id: string): Promise<Blog> => {
   return await response.json()
 }
 
+export const getUsers = async (): Promise<User[]> => {
+  const response = await fetch(`${BASE_URL}/api/users`)
+  return await response.json()
+}
+
 export const login = async (credentials: LoginCredentials): Promise<LoginWithToken> => {
   const response = await fetch(`${BASE_URL}/api/login`, {
     method: 'POST',
