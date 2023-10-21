@@ -8,37 +8,36 @@ import { deleteBlog } from '../services/blogServices'
 
 interface BlogCardProps {
   blog: Blog
+  user?: string
 }
 
-export const BlogCard = ({ blog }: BlogCardProps): JSX.Element => {
-  const { title, author, blogText, id, user: BlogUser } = blog
+export const BlogCard = ({ blog, user: BlogUser }: BlogCardProps): JSX.Element => {
+  const { title, author, blogText, id } = blog
   const { user } = useContext(LoginContext)
-
-  const userId = BlogUser.map(user => {
-    return user.username
-  })
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
-      const response = await deleteBlog(id)
-      console.log(response)
+      await deleteBlog(id)
     } catch (error) {
       console.log(error)
     }
   }
+
+  const result = user?.username !== undefined && BlogUser !== undefined ? user.username === BlogUser : false
+
   return (
 
-    <section className=" bg-white border mx-2 border-gray-200 rounded-lg shadow sm:w-screen md:max-w-sm dark:bg-gray-800 dark:border-gray-700">
+    <section className=" bg-white border mx-2 border-gray-200 rounded-lg shadow sm:w-screen md:max-w-sm dark:bg-gray-800 dark:border-gray-700 max-h-[200px] ">
         <header className='text-red-600 flex justify-end mx-3 mt-3'>
           <button onClick={() => { void handleDelete(id) }}>
           {
-            (user?.username) === userId[0] ? <Delete/> : null
+            result ? <Delete/> : null
           }
           </button>
         </header>
         <div className="p-5 pt-0 min-w-[236px]">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{blogText}</p>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 overflow-hidden h-[50px]">{blogText}</p>
             <p className="mb-3 font-bold text-gray-500 dark:text-gray-400">{firstLetterUpperCase(author)}</p>
 
             <Link to={`/blogs/${id}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

@@ -1,35 +1,27 @@
-import { useEffect, useState } from 'react'
-import { getBlogs, setToken } from '../services/blogServices'
-
-import { type Blog } from '../types/blogsTypes'
+import { useContext } from 'react'
 import { BlogCard } from '../components/BlogCard'
 import { Navbar } from '../components/Navbar'
+import { LoginContext } from '../context/LoginContext'
+import { useGetUsers } from '../hooks/useGetUsers'
 
 export const MyBlogs = (): JSX.Element => {
-  const [blogs, setBlogs] = useState<Blog[]>([])
+  const { user } = useContext(LoginContext)
+  const { users } = useGetUsers()
 
-  const fetchData = async (): Promise<void> => {
-    try {
-      const data = await getBlogs()
-      setBlogs(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  useEffect(() => {
-    void fetchData()
-    const token = localStorage.getItem('user')
-    if (JSON.parse(token as string) !== null) {
-      const user = JSON.parse(token as string).token
-      setToken(user.token)
-    }
-  }, [])
+  const filter = users.filter(item => {
+    const byUsername = item.username === user?.username
+
+    return byUsername || []
+  })
+
   return (
     <section>
         <Navbar/>
         {
-            blogs.map(item => {
-              return <BlogCard key={item.id} blog={item}/>
+            filter?.map(item => {
+              return item?.blogs.map(i => {
+                return <BlogCard key={i.id} blog={i} user={item.username}/>
+              })
             })
         }
     </section>
