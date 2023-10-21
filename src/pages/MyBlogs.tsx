@@ -13,17 +13,18 @@ export const MyBlogs = (): JSX.Element => {
 
     return byUsername || []
   })
-
   return (
-    <section>
+    <section className='dark:bg-black min-h-screen'>
         <Navbar/>
+        <section className='max-w-screen-xl flex justify-center flex-wrap gap-10 items-center  mx-auto mt-10'>
         {
-            filter?.map(item => {
-              return item?.blogs.map(i => {
-                return <BlogCard key={i.id} blog={i} user={item.username}/>
-              })
+          filter?.map(item => {
+            return item?.blogs.map(i => {
+              return <BlogCard key={i.id} blog={i} user={item.username}/>
             })
+          })
         }
+        </section>
     </section>
   )
 }

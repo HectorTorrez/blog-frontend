@@ -27,7 +27,7 @@ export const BlogCard = ({ blog, user: BlogUser }: BlogCardProps): JSX.Element =
 
   return (
 
-    <section className=" bg-white border mx-2 border-gray-200 rounded-lg shadow sm:w-screen md:max-w-sm dark:bg-gray-800 dark:border-gray-700 max-h-[200px] ">
+    <section className=" bg-white border mx-2 border-gray-200 rounded-lg shadow sm:w-screen md:max-w-sm dark:bg-gray-800 dark:border-gray-700 max-h-[250px] ">
         <header className='text-red-600 flex justify-end mx-3 mt-3'>
           <button onClick={() => { void handleDelete(id) }}>
           {
