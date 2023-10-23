@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Moon, Sun } from './Icons'
 
 export const DarkModeToggle = (): JSX.Element => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -24,15 +25,15 @@ export const DarkModeToggle = (): JSX.Element => {
   }
   return (
     <button
-    className="rounded-full w-8 h-8 bg-gray-300 dark:bg-gray-700"
+    className="w-full flex justify-center p-2 md:border-4 shadow-inner hover:border-blue-500 md:border-gray-200 md:rounded-lg text-white border-2 border-gray-200 rounded-lg md:bg-transparent md:text-blue-700 md:p-x-4 dark:text-white dark:shadow-none dark:border-2 md:dark:text-blue-500 dark:hover:border-blue-500 "
     onClick={toggleDarkMode}
   >
     {darkMode
       ? (
-      <span className="text-white">🌙</span>
+      <p className="text-white text-center"><Moon/></p>
         )
       : (
-      <span className="text-black">☀️</span>
+      <span className="text-black text-center"><Sun/></span>
         )}
   </button>
   )

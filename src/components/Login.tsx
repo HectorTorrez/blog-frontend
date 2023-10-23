@@ -88,7 +88,7 @@ export const Login = (): JSX.Element => {
                     </p>
                 </form>
             </div>
-        A</div>
+        </div>
     </div>
   </section>
 
