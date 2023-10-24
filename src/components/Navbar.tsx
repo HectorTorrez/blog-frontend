@@ -12,10 +12,10 @@ export const Navbar = (): JSX.Element => {
   const { user, setUser } = useLoginContext(LoginContext)
   const navigate = useNavigate()
 
-  const activeLinkMobile = 'block md:hidden py-2 pl-3 pr-4  border-4  border-gray-300 md:rounded-lg text-blue-700 font-bold  rounded '
-  const inactiveLinkMobile = 'block md:hidden py-2 pl-3 pr-4  border-4  border-gray-300 md:rounded-lg text-gray-600 font-bold  rounded  '
+  const activeLinkMobile = 'block md:hidden py-2 pl-3 pr-4  border-4  border-blue-400 md:rounded-lg text-gray-200 font-bold  rounded '
+  const inactiveLinkMobile = 'block md:hidden py-2 pl-3 pr-4  border-4  border-gray-300 md:rounded-lg text-gray-200 font-bold  rounded  '
 
-  const activeLink = 'block py-2 pl-3 pr-4 shadow-inner w-[100%] md:border-4  md:border-gray-300 md:rounded-lg text-gray-300 bg-gray-700 rounded md:bg-transparent md:text-blue-700 md:w-[150px] md:p-x-4 dark:text-white md:dark:text-gray-700 dark:shadow-none dark:border-2  dark:bg-gray-700 dark:bg-gray-300 dark:text-gray-700'
+  const activeLink = 'block py-2 pl-3 pr-4 shadow-inner w-[100%] md:border-4  md:border-gray-300 md:rounded-lg text-gray-300 bg-gray-700 rounded md:bg-transparent md:text-blue-700 md:w-[150px] md:p-x-4 dark:text-white md:dark:text-white-500 dark:shadow-none dark:border-4 dark:border-blue-500   dark:bg-gray-700 dark:bg-gray-300 dark:text-gray-700'
   const inactiveLink = 'block py-2 pl-3 pr-4 shadow-inner w-[100%] text-blue md:border-4 hover:border-blue-500  md:border-gray-200 md:rounded-lg text-gray-700 bg-gray-300 rounded md:w-[150px] md:bg-transparent md:text-white-700 md:p-x-4 dark:text-white md:dark:text-white-500 dark:shadow-none  dark:bg-gray-700'
 
   const handleLogout = async (): Promise<void> => {
@@ -51,7 +51,7 @@ export const Navbar = (): JSX.Element => {
         </>
           )
         : (
-        <button onClick={() => { setShowNavbar(!showNavbar) }} data-collapse-toggle="navbar-default" type="button" className="inline-flex border-4 shadow-inner items-center p-2 w-[100px] h-10 justify-center text-sm text-gray-600 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" >
+        <button onClick={() => { setShowNavbar(!showNavbar) }} data-collapse-toggle="navbar-default" type="button" className="inline-flex border-4 focus:border-blue-400 shadow-inner items-center p-2 w-[100px] h-10 justify-center text-sm text-gray-600 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" >
             <Person/>
         </button>
 

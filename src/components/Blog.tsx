@@ -24,7 +24,7 @@ export const Blog = (): JSX.Element => {
         <h2 className='font-bold text-6xl text-blue-400'>{blog?.title}</h2>
         <p className='font-semibold text-xl text-gray-500'>{blog?.author}</p>
         </article>
-        <article className='max-w-screen-xl font-semibold '>
+        <article className='max-w-screen-xl font-semibold p-4 '>
           {blog?.blogText}
         </article>
       </section>
