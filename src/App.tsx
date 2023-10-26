@@ -11,7 +11,7 @@ export const App = (): JSX.Element => {
   const { blogs } = useGetBooks()
 
   return (
-    <section className='dark:bg-black min-h-screen'>
+    <section className='dark:bg-gray-900 min-h-screen'>
       <Navbar/>
     <div className='flex justify-end w-[90%] m-auto max-w-screen-lg mt-[10px]'>
       {

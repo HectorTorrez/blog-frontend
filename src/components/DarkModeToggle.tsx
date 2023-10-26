@@ -25,12 +25,12 @@ export const DarkModeToggle = (): JSX.Element => {
   }
   return (
     <button
-    className="w-full flex justify-center p-2 md:border-4 shadow-inner hover:border-blue-500 md:border-gray-200 md:rounded-lg text-white border-2 border-gray-200 rounded-lg md:bg-transparent md:text-blue-700 md:p-x-4 dark:text-white dark:shadow-none dark:border-2 md:dark:text-blue-500 dark:hover:border-blue-500 "
+    className="flex justify-center  items-center shadow-inner font-medium h-[30px]  border hover:border-2 border-gray-200 w-[164px] hover:font-medium rounded hover: hover:border-[#e2e8f0]  dark:text-purple-700 dark:border-purple-700 dark:hover:bg-gray-900 dark:hover:border-purple-700 dark:hover:text-purple-700 dark:active:bg-gray-900 dark:active:border-purple-700"
     onClick={toggleDarkMode}
   >
     {darkMode
       ? (
-      <p className="text-white text-center"><Moon/></p>
+      <p className=" text-center text-white-700 font-medium"><Moon/></p>
         )
       : (
       <span className="text-black text-center"><Sun/></span>
