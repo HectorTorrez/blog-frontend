@@ -5,19 +5,13 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useLoginContext } from '../hooks/useLoginContext'
 import { LoginContext } from '../context/LoginContext'
 import { SweetAlertConfirm } from '../utils'
+import { activeLink, activeLinkMobile, inactiveLink, inactiveLinkMobile } from '../utils/styles/NavbarStyles'
 
 export const Navbar = (): JSX.Element => {
   const [showNavbar, setShowNavbar] = useState(false)
 
   const { user, setUser } = useLoginContext(LoginContext)
   const navigate = useNavigate()
-
-  const activeLinkMobile = 'flex items-center justify-center h-[34px] md:hidden  text-center shadow-inner font-medium  text-gray-700 border-2 border-[#e2e8f0] bg-white w-[150px] hover:font-medium rounded   dark:text-purple-700 dark:border-purple-700 dark:hover:bg-gray-900 dark:hover:border-purple-700 dark:hover:text-purple-700 dark:active:bg-gray-900 dark:active:border-purple-700'
-
-  const inactiveLinkMobile = 'flex items-center justify-center h-[34px] md:hidden  text-center shadow-inner   text-gray-700 border hover:border-2 border-gray-200 w-[150px] font-medium rounded  hover:border-[#e2e8f0]dark:text-purple-700 dark:border-purple-700 dark:hover:bg-gray-900 dark:hover:border-purple-700 dark:hover:text-purple-700 dark:active:bg-gray-900 dark:active:border-purple-700'
-
-  const activeLink = 'flex items-center justify-center h-[34px] w-full   text-center shadow-inner font-medium  text-gray-700  border-2 border-[#e2e8f0]  w-[150px] hover:font-medium rounded  dark:text-purple-700 dark:border-purple-700 dark:hover:bg-gray-900 dark:hover:border-purple-700 dark:hover:text-purple-700 dark:active:bg-gray-900 dark:active:border-purple-700'
-  const inactiveLink = 'flex items-center justify-center h-[34px]  w-full  text-center shadow-inner   text-gray-700 border hover:border-2 border-gray-200 w-[150px] hover:font-medium rounded hover:border-[#e2e8f0]  dark:text-purple-700 dark:border-purple-700 dark:hover:bg-gray-900 dark:hover:border-purple-700 dark:hover:text-purple-700 dark:active:bg-gray-900 dark:active:border-purple-700'
 
   const handleLogout = async (): Promise<void> => {
     const response = await SweetAlertConfirm({

@@ -25,7 +25,7 @@ export const DarkModeToggle = (): JSX.Element => {
   }
   return (
     <button
-    className="flex justify-center  items-center shadow-inner font-medium h-[30px]  border hover:border-2 border-gray-200 w-[164px] hover:font-medium rounded hover: hover:border-[#e2e8f0]  dark:text-purple-700 dark:border-purple-700 dark:hover:bg-gray-900 dark:hover:border-purple-700 dark:hover:text-purple-700 dark:active:bg-gray-900 dark:active:border-purple-700"
+    className="flex justify-center  items-center shadow-inner font-medium h-[30px]  border hover:border-2 border-gray-200 w-[164px] hover:font-medium rounded hover: hover:border-[#e2e8f0]  dark:text-white dark:border-gray-200 dark:hover:bg-gray-900   dark:active:bg-gray-900 "
     onClick={toggleDarkMode}
   >
     {darkMode
