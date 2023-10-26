@@ -79,7 +79,7 @@ export const Navbar = (): JSX.Element => {
                   <li className='w-full text-center'>
                     <button onClick={() => {
                       void handleLogout()
-                    }} className={`${inactiveLink} border-none  bg-gray-200`} type="button">Logout</button>
+                    }} className={inactiveLink} type="button">Logout</button>
                   </li>
             </>
                 )

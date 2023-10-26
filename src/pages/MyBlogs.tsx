@@ -14,7 +14,7 @@ export const MyBlogs = (): JSX.Element => {
     return byUsername || []
   })
   return (
-    <section className='dark:bg-black min-h-screen'>
+    <section className='dark:bg-gray-900 min-h-screen'>
         <Navbar/>
         <section className='max-w-screen-xl flex justify-center flex-wrap gap-10 items-center  mx-auto mt-10'>
         {
