@@ -6,13 +6,12 @@ import {
 } from 'react-router-dom'
 import { App } from './App.tsx'
 import './index.css'
-import { Login } from './components/Login.tsx'
-import { Register } from './components/Register.tsx'
 import { FormPost } from './components/FormPost.tsx'
 import { Blog } from './components/Blog.tsx'
 import { LoginProvider } from './context/LoginContext.tsx'
 import { Error } from './pages/Error.tsx'
 import { MyBlogs } from './pages/MyBlogs.tsx'
+import { Auth } from './pages/Auth.tsx'
 
 const router = createBrowserRouter([
   {
@@ -29,12 +28,8 @@ const router = createBrowserRouter([
     element: <Blog/>
   },
   {
-    path: '/login',
-    element: <Login/>
-  },
-  {
-    path: '/register',
-    element: <Register/>
+    path: '/auth',
+    element: <Auth/>
   },
   {
     path: '/create-blog',
