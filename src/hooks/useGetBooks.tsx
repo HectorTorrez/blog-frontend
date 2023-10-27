@@ -31,7 +31,7 @@ export const useGetBooks = (): useGetBooksProps => {
   setTimeout(() => {
     localStorage.removeItem('user')
     setUser(null)
-  }, 300000)
+  }, 3600000)
   return {
     blogs
   }
