@@ -45,7 +45,7 @@ export const UserMenu = ({
               <>
                 <li className="w-full text-center">
                   <NavLink
-                    to="/login"
+                    to="/auth"
                     className={({ isActive }) =>
                       isActive ? activeLink : inactiveLink
                     }

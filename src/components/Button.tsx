@@ -1,5 +1,5 @@
 interface ButtonProps {
-  onClick: () => void
+  onClick?: () => void
   type: 'button' | 'submit' | 'reset'
   className: string
   children: React.ReactNode
