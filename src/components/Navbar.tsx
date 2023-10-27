@@ -100,7 +100,7 @@ export const Navbar = (): JSX.Element => {
               <>
                 <li className="w-full text-center">
                   <NavLink
-                    to="/login"
+                    to="/auth"
                     className={({ isActive }) =>
                       isActive ? activeLink : inactiveLink
                     }
