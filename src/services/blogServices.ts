@@ -34,13 +34,11 @@ export const login = async (credentials: LoginCredentials): Promise<LoginWithTok
   return await response.json()
 }
 
-export const createUser = async (credentials: createUserCredentials): Promise<User> => {
+export const createUser = async (credentials: any): Promise<User> => {
+  // TODO FIX TYPES
   const response = await fetch(`${BASE_URL}/api/users`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
+    body: credentials
   })
   return await response.json()
 }
