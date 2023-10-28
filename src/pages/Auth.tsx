@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { Alert } from '../components/Alert'
 import { createUser, login, setToken } from '../services/blogServices'
@@ -7,12 +7,15 @@ import { useNavigate } from 'react-router-dom'
 import { Email, Lock, Photo } from '../components/Icons'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
+import { ProgressBar } from '../components/ProgressBar'
 export const Auth = (): JSX.Element => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [image, setImage] = useState<File | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [progress, setProgress] = useState<number>(0)
 
   const [variant, setVariant] = useState('login')
 
@@ -20,6 +23,8 @@ export const Auth = (): JSX.Element => {
     setVariant((currentVariant) =>
       currentVariant === 'login' ? 'register' : 'login'
     )
+    setError('')
+    setProgress(0)
   }, [])
   const { setUser } = useContext(LoginContext)
   const [error, setError] = useState('')
@@ -28,6 +33,7 @@ export const Auth = (): JSX.Element => {
 
   const handleLogin = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setLoading(true)
     try {
       const getUser = await login({ username, password })
       if (getUser.error !== null) {
@@ -42,11 +48,22 @@ export const Auth = (): JSX.Element => {
       }
     } catch (error) {
       console.error(error)
+    } finally {
+      setLoading(false)
     }
   }, [navigate, password, setUser, username])
 
   const handleRegister = useCallback(async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
+    setLoading(true)
+
+    if (name.length === 0 || username.length === 0 || password.length === 0 || confirmPassword.length === 0) {
+      setError('all fields are required')
+      setLoading(false)
+      setProgress(0)
+      return
+    }
+
     const formData = new FormData()
     formData.append('name', name)
     formData.append('username', username)
@@ -64,8 +81,8 @@ export const Auth = (): JSX.Element => {
       if ((response?.id) != null) {
         setVariant('login')
       }
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      throw new Error(error)
     } finally {
       setName('')
       setUsername('')
@@ -73,14 +90,32 @@ export const Auth = (): JSX.Element => {
       setConfirmPassword('')
       setImage(null)
       setError('')
+      setLoading(false)
+      setProgress(100)
     }
   }, [name, password, username, confirmPassword, navigate, handleLogin])
 
+  useEffect(() => {
+    if (loading) {
+      const interval = setInterval(() => {
+        if (progress <= 90) {
+          setProgress((prevProgress) => prevProgress + 10)
+        } else {
+          clearInterval(interval)
+        }
+      }, 1000)
+
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  }, [progress, loading])
   return (
     <section className="bg-gray-50 dark:bg-gray-900 ">
       <Navbar />
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0 ">
-        <div className="w-full bg-white mb-[150px] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+        <div className="w-full relative bg-white mb-[150px] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+        {loading ? <ProgressBar progress={progress} /> : null}
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             {error?.length > 0 ? <Alert text={error} type="error" /> : null}
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -155,9 +190,9 @@ export const Auth = (): JSX.Element => {
             )}
             <Button
                 type='submit'
-                className='w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800'
+                className={`${loading && 'opacity-50 pointer-events-none'} w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800`}
             >
-                {variant === 'login' ? 'Login' : 'Register'}
+                { variant === 'login' ? 'Login' : 'Register'}
             </Button>
 
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -170,7 +205,7 @@ export const Auth = (): JSX.Element => {
                 </span>
               </p>
             </form>
-          </div>
+          P</div>
         </div>
       </div>
     </section>
