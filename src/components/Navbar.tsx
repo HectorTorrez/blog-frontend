@@ -53,7 +53,7 @@ export const Navbar = (): JSX.Element => {
           ? (
           <>
             <NavLink
-              to="/login"
+              to="/auth"
               className={({ isActive }) =>
                 isActive ? activeLinkMobile : inactiveLinkMobile
               }
