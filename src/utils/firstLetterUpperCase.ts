@@ -1,7 +1,5 @@
 export const firstLetterUpperCase = (text: string): string => {
-  const word = text.split(' ')
-  const capitalize = word.map(item => {
-    return item.charAt(0).toUpperCase() + item.slice(1)
-  })
-  return capitalize.join(' ')
+  const first = text.split('')[0].toUpperCase()
+  const remaining = text.slice(1)
+  return first + remaining
 }

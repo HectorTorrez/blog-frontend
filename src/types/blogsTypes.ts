@@ -35,7 +35,7 @@ export interface LoginCredentials {
 
 export interface createUserCredentials extends LoginCredentials {
   name: string
-  imageProfile: File | null
+  imageProfile: File
 }
 
 export interface LoginWithToken extends LoginCredentials {
