@@ -1,25 +1,28 @@
 import { NavLink } from 'react-router-dom'
 import { Button } from './Button'
-import { Person } from './Icons'
-import { type User } from '../types/blogsTypes'
+
 import {
   activeLink,
   inactiveLink
 } from '../utils/styles/NavbarStyles'
 
+import { LoginContext } from '../context/LoginContext'
+import { useContext } from 'react'
+
 interface UserMenuProps {
   setShowNavbar: (value: boolean) => void
   showNavbar: boolean
-  user: User
   handleLogout: () => Promise<void>
 }
 
 export const UserMenu = ({
   setShowNavbar,
   showNavbar,
-  user,
   handleLogout
 }: UserMenuProps): JSX.Element => {
+
+  const { user } = useContext(LoginContext)
+
   return (
     <div>
       <Button
@@ -27,9 +30,9 @@ export const UserMenu = ({
           setShowNavbar(!showNavbar)
         }}
         type="button"
-        className="inline-flex border-4  shadow-inner items-center p-2 w-[100px] h-10 justify-center text-sm text-gray-600 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="inline-flex border-4  shadow-inner items-center  w-[100px] h-10 justify-center text-sm text-gray-600 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
-        <Person />
+       <img className='object-cover h-full w-[30px] rounded-full' src={user?.imageProfile.secure_url} alt="image profile" />
       </Button>
       <div
         className={`${

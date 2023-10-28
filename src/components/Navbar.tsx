@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react';
 import { useNavigate, Link, NavLink } from 'react-router-dom'
-import { useLoginContext } from '../hooks/useLoginContext'
 import { LoginContext } from '../context/LoginContext'
 import { SweetAlertConfirm } from '../utils'
 
@@ -18,7 +17,7 @@ import { UserMenu } from './UserMenu'
 export const Navbar = (): JSX.Element => {
   const [showNavbar, setShowNavbar] = useState(false)
 
-  const { user, setUser } = useLoginContext(LoginContext)
+  const { user, setUser } = useContext(LoginContext)
   const navigate = useNavigate()
 
   const handleLogout = async (): Promise<void> => {
@@ -68,9 +67,9 @@ export const Navbar = (): JSX.Element => {
             setShowNavbar(!showNavbar)
           }}
           type="button"
-          className="inline-flex border-4  shadow-inner items-center p-2 w-[100px] h-10 justify-center text-sm text-gray-600 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex border-4  shadow-inner items-center  w-[100px] h-10 justify-center text-sm text-gray-600 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           >
-            <Person />
+            <img className='object-cover h-full w-[30px] rounded-full' src={user?.imageProfile.secure_url} alt="image profile" />
           </Button>
             )}
 
@@ -134,7 +133,7 @@ export const Navbar = (): JSX.Element => {
                   </Button>
                 </li>
                 <li className='w-full text-center hidden md:block'>
-                  <UserMenu setShowNavbar={setShowNavbar} showNavbar={showNavbar} user={user} handleLogout={handleLogout}/>
+                  <UserMenu setShowNavbar={setShowNavbar} showNavbar={showNavbar}  handleLogout={handleLogout}/>
                 </li>
               </>
                 )}
