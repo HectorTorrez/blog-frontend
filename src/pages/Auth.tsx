@@ -234,8 +234,7 @@ export const Auth = (): JSX.Element => {
                   {variant === 'login' ? 'Create an account' : 'Login'}
                 </span>
               </p>
-            </form>
-            
+            </form>  
           </div>
         </div>
       </div>
