@@ -3,7 +3,7 @@ import { useNavigate, Link, NavLink } from 'react-router-dom'
 import { LoginContext } from '../context/LoginContext'
 import { SweetAlertConfirm } from '../utils'
 
-import { Person } from './Icons'
+
 import { DarkModeToggle } from './DarkModeToggle'
 import {
   activeLink,
@@ -81,7 +81,7 @@ export const Navbar = (): JSX.Element => {
           }`}
           id="navbar-default"
         >
-          <ul className="font-medium flex flex-col gap-3  items-center p-4 md:p-0 mt-4  absolute -top-1 right-0  w-[200px] md:w-auto md:relative border-2  rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ">
+          <ul className="font-medium flex flex-col gap-3 z-50  items-center p-4 md:p-0 mt-4  absolute -top-1 right-0  w-[200px] md:w-auto md:relative border-2  rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 ">
             <DarkModeToggle />
             <li className="w-full text-center">
               <NavLink
@@ -119,6 +119,16 @@ export const Navbar = (): JSX.Element => {
                     }
                   >
                     My Blogs
+                  </NavLink>
+                </li>
+                <li className="w-full text-center">
+                  <NavLink
+                    to="/profile"
+                    className={({ isActive }) =>
+                      isActive ? activeLink : inactiveLink
+                    }
+                  >
+                    My Profile
                   </NavLink>
                 </li>
                 <li className="w-full text-center md:hidden">

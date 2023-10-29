@@ -41,6 +41,7 @@ export interface createUserCredentials extends LoginCredentials {
 export interface LoginWithToken extends LoginCredentials {
   token: string
   error: string
+  name: string
   imageProfile: {
     secure_url: string,
     public_id: string
