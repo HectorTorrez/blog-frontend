@@ -12,6 +12,7 @@ import { LoginProvider } from './context/LoginContext.tsx'
 import { Error } from './pages/Error.tsx'
 import { MyBlogs } from './pages/MyBlogs.tsx'
 import { Auth } from './pages/Auth.tsx'
+import { MyProfile } from './pages/MyProfile.tsx'
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,15 @@ const router = createBrowserRouter([
   {
     path: '/create-blog',
     element: <FormPost/>
-  }
+  },
+  {
+    path: 'profile',
+    element: <MyProfile/>
+  },
+  {
+    path: '*',
+    element: <Error/>
+  },
 ])
 
 const rootElement = document.getElementById('root')
