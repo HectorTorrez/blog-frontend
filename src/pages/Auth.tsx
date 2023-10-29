@@ -235,7 +235,7 @@ export const Auth = (): JSX.Element => {
                 </span>
               </p>
             </form>
-            P
+            
           </div>
         </div>
       </div>
