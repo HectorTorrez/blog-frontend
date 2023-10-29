@@ -157,6 +157,8 @@ export const Auth = (): JSX.Element => {
                     }}
                     placeholder="name"
                     icon={<Email />}
+                    inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   />
                   <Input
                     id="imageProfile"
@@ -168,6 +170,8 @@ export const Auth = (): JSX.Element => {
                       setImage(files[0])
                     }}
                     icon={<Photo />}
+                    inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   />
                 </>
               )}
@@ -181,6 +185,8 @@ export const Auth = (): JSX.Element => {
                 }}
                 placeholder="username"
                 icon={<Email />}
+                inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               />
               <Input
                 id="password"
@@ -192,6 +198,8 @@ export const Auth = (): JSX.Element => {
                 value={password}
                 placeholder="••••••••"
                 icon={<Lock />}
+                inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               />
               {variant === 'register' && (
                 <Input
@@ -204,6 +212,8 @@ export const Auth = (): JSX.Element => {
                   }}
                   placeholder="••••••••"
                   icon={<Lock />}
+                  inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 />
               )}
               <Button
