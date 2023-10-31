@@ -17,8 +17,9 @@ import { UserMenu } from './UserMenu'
 export const Navbar = (): JSX.Element => {
   const [showNavbar, setShowNavbar] = useState(false)
 
-  const { user, setUser } = useContext(LoginContext)
+  const { user, changeUser } = useContext(LoginContext)
   const navigate = useNavigate()
+
 
   const handleLogout = async (): Promise<void> => {
     const response = await SweetAlertConfirm({
@@ -28,12 +29,13 @@ export const Navbar = (): JSX.Element => {
       confirmButtonText: 'Confirm',
       titleFire: 'Loggedout',
       bodyFire: 'you have been loggedout',
-      iconFire: 'success'
+      iconFire: 'success',
+      showCancelButton: true,
     })
 
     if (response.isConfirmed) {
       localStorage.removeItem('user')
-      setUser(null)
+      changeUser(null)
       setShowNavbar(false)
       navigate('/')
     }

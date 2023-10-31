@@ -4,15 +4,15 @@ import { type LoginWithToken } from '../types/blogsTypes'
 interface LoginContextType {
   isLoggedIn: boolean
   setIsLoggedIn: (isLoggedIn: boolean) => void
-  setUser: (user: LoginWithToken | null) => void
   user: LoginWithToken | null
+  changeUser: (newState: LoginWithToken | null) => void
 }
 
 export const LoginContext = createContext<LoginContextType>({
   isLoggedIn: false,
   setIsLoggedIn: () => {},
-  setUser: () => {},
-  user: null
+  user: null,
+  changeUser: () => {}
 })
 
 export const LoginProvider = ({ children }: { children: ReactNode }): JSX.Element => {
@@ -27,12 +27,16 @@ export const LoginProvider = ({ children }: { children: ReactNode }): JSX.Elemen
     }
   )
 
+  const changeUser = (newState: LoginWithToken | null) => {
+    setUser(newState)
+  }
+
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user))
-  }, [user])
+  }, [user, changeUser])
 
   return (
-        <LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn, setUser, user }}>
+        <LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn, changeUser, user }}>
             {children}
         </LoginContext.Provider>
   )
