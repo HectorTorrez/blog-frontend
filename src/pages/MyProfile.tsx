@@ -1,9 +1,13 @@
 import { Input } from "../components/Input"
 import { useContext, useState, useEffect } from 'react';
 import { Navbar } from "../components/Navbar";
-import { Email, Lock } from "../components/Icons";
+import { Email, Lock, Spinner } from "../components/Icons";
 import { Button } from "../components/Button";
 import { LoginContext } from "../context/LoginContext";
+import { updateUser } from "../services";
+import { Alert } from "../components/Alert";
+import { SweetAlertConfirm } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 export const MyProfile = () => {
 
@@ -13,10 +17,15 @@ export const MyProfile = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [image, setImage] = useState('')
     const [imageProfile, setImageProfile] = useState<File | null>(null)
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
-    // TODO MAKE THE FUNCTION TO UPDATE THE USER
 
-    const {user} = useContext(LoginContext)
+
+
+
+    const {user, changeUser} = useContext(LoginContext)
+    const navigate = useNavigate()
 
 
 
@@ -29,15 +38,90 @@ export const MyProfile = () => {
         }
     }, [])
 
+    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoading(true)
+        if (
+            name.length === 0 ||
+            username.length === 0 ||
+            password.length === 0 ||
+            confirmPassword.length === 0 ||
+            imageProfile === null
+          ) {
+            setError('all fields are required')
+            setLoading(false)
+            return
+          }
+
+          
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('username', username)
+      formData.append('password', password)
+      if (imageProfile !== null) {
+        formData.append('imageProfile', imageProfile)
+      }
+      if (image === null) {
+        setError('the image is required')
+        setLoading(false)
+        return
+      } else {
+        setError('')
+      }
+      if (password !== confirmPassword) {
+        setError('the password is not the same')
+        setLoading(false)
+        return
+      }
+
+      try {
+        if(user === null) return
+        await updateUser(formData, user.id)
+      } catch (error: any) {
+        throw new Error(error)
+      } finally {
+        setName('')
+        setUsername('')
+        setPassword('')
+        setConfirmPassword('')
+        setImageProfile(null)
+        setImage('')
+        setError('')
+        const response = await SweetAlertConfirm({
+            title: 'After that you will be logged out',
+            text: 'You wont be able to revert this',
+            icon: 'warning',
+            confirmButtonText: 'Confirm',
+            titleFire: 'Loggedout',
+            bodyFire: 'you have been loggedout',
+            iconFire: 'success',
+            showCancelButton: false,
+        })
+        if (response.isConfirmed) {
+            changeUser(null)
+            setLoading(false)
+            navigate('/')
+          }
+
+
+      }
+    }
+
   return (
     <section>
         <Navbar/>
-        <form className="max-w-screen-xl flex flex-col items-center dark:bg-gray-900 h-screen gap-12">
-
-            <header className="mt-10">
+        <form onSubmit={(e) => {
+            handleUpdate(e)
+        }} className="max-w-screen-xl flex flex-col items-center dark:bg-gray-900 h-screen gap-5">
+            <header className="mt-5">
                 <p className="font-bold text-6xl text-blue-600">Profile</p>
             </header>
             <article className="flex flex-col gap-3">
+                {
+                    error.length > 0 && (
+                        <Alert text={error} type="error"/>
+                    )
+                }
                 <Input
                     type="text"
                     id="name"
@@ -62,9 +146,10 @@ export const MyProfile = () => {
                             const { files } = e.target
                             if (files === null) return
                             setImage(URL.createObjectURL(files[0]))
+                            setImageProfile(files[0])
                         }}
                         labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white  "
-                        inputClassName="file:text-gray-900 dark:text-gray-900 file:bg-gray-50 file:px-4 file:py-1 text-white file:dark:bg-gray-700 file:text-white  file:border file:rounded-lg file:dark:text-white file:border-gray-300 file:mt-4"
+                        inputClassName="file:text-gray-900 dark:text-gray-900 file:bg-gray-50 file:px-4 file:py-1 text-white file:dark:bg-gray-700 file:dark:text-white  file:border file:rounded-lg file:dark:text-white file:border-gray-300 file:mt-4"
                     />
                 </section>
                 <Input
@@ -103,11 +188,8 @@ export const MyProfile = () => {
                 <Button
                     type="submit"
                     className=" w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                    onClick={() => {
-                        console.log('save')
-                    }}
                 >
-                    Save
+                    {loading ? <Spinner/> : 'Update'}
                 </Button>
             </article>
 
