@@ -42,6 +42,7 @@ export interface LoginWithToken extends LoginCredentials {
   token: string
   error: string
   name: string
+  id: string
   imageProfile: {
     secure_url: string,
     public_id: string

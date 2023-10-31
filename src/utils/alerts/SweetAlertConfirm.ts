@@ -7,16 +7,17 @@ interface SweetAlerConfirmProps {
   titleFire: string
   bodyFire: string
   iconFire: SweetAlertIcon
+  showCancelButton: boolean
 }
-export const SweetAlertConfirm = async ({ title, text, icon, confirmButtonText, titleFire, bodyFire, iconFire }: SweetAlerConfirmProps): Promise<SweetAlertResult> => {
+export const SweetAlertConfirm = async ({ title, text, icon, confirmButtonText, titleFire, bodyFire, iconFire, showCancelButton }: SweetAlerConfirmProps): Promise<SweetAlertResult> => {
   return await Swal.fire({
     title,
     text,
     icon,
-    showCancelButton: true,
+    showCancelButton: showCancelButton,
     confirmButtonColor: '#2563eb',
     cancelButtonColor: '#ff2100',
-    confirmButtonText
+    confirmButtonText,
   }).then((result) => {
     if (result.isConfirmed) {
       void Swal.fire(
