@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getUsers } from '../services/blogServices'
+import { getUsers } from '../services/userServices'
 import { type User } from '../types/blogsTypes'
 
 interface useGetUsersProps {

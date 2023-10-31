@@ -1,13 +1,14 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { Alert } from '../components/Alert'
-import { createUser, login, setToken } from '../services/blogServices'
+import {  setToken } from '../services/blogServices'
 import { LoginContext } from '../context/LoginContext'
 import { useNavigate } from 'react-router-dom'
 import { Email, Lock, Photo } from '../components/Icons'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 import { ProgressBar } from '../components/ProgressBar'
+import { createUser, login } from '../services'
 export const Auth = (): JSX.Element => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
@@ -26,7 +27,7 @@ export const Auth = (): JSX.Element => {
     setError('')
     setProgress(0)
   }, [])
-  const { setUser } = useContext(LoginContext)
+  const { changeUser } = useContext(LoginContext)
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
@@ -41,7 +42,7 @@ export const Auth = (): JSX.Element => {
           setError(getUser.error)
         }
         if (getUser.token.length > 0) {
-          setUser(getUser)
+          changeUser(getUser)
           setToken(getUser.token)
         }
         if (getUser.token?.length > 0) {
@@ -53,7 +54,7 @@ export const Auth = (): JSX.Element => {
         setLoading(false)
       }
     },
-    [navigate, password, setUser, username]
+    [navigate, password, changeUser, username]
   )
 
   const handleRegister = useCallback(

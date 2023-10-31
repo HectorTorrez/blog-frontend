@@ -62,7 +62,7 @@ export const UserMenu = ({
               <>
                 <li className="w-full text-center">
                   <NavLink
-                    to="/myblogs"
+                    to="/profile"
                     className={({ isActive }) =>
                       isActive ? activeLink : inactiveLink
                     }
