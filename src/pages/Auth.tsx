@@ -4,19 +4,23 @@ import { Alert } from '../components/Alert'
 import {  setToken } from '../services/blogServices'
 import { LoginContext } from '../context/LoginContext'
 import { useNavigate } from 'react-router-dom'
-import { Email, Lock, Photo } from '../components/Icons'
+import { Email, Lock, Photo, Spinner } from '../components/Icons'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 import { ProgressBar } from '../components/ProgressBar'
 import { createUser, login } from '../services'
+import { useRegisterValidation } from '../hooks/useRegisterValidation'
 export const Auth = (): JSX.Element => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [image, setImage] = useState<File | null>(null)
-  const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState<number>(0)
+  const { changeUser } = useContext(LoginContext)
+  
+
+  const { loading,  setLoading, errorName, errorUsername, errorPassword, errorConfirmPassword, errorImage, error, setError} = useRegisterValidation({password, confirmPassword, name, username, image})
 
   const [variant, setVariant] = useState(() => {
     const auth = localStorage.getItem('auth')
@@ -30,13 +34,13 @@ export const Auth = (): JSX.Element => {
     setVariant((currentVariant) =>
       currentVariant === 'login' ? 'register' : 'login'
     )
-    setError('')
     setProgress(0)
   }, [])
-  const { changeUser } = useContext(LoginContext)
-  const [error, setError] = useState('')
 
   const navigate = useNavigate()
+
+
+
 
   useEffect(() => {
     localStorage.setItem('auth', variant)
@@ -71,19 +75,12 @@ export const Auth = (): JSX.Element => {
   const handleRegister = useCallback(
     async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
       e.preventDefault()
+      if(errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 || errorConfirmPassword.length > 0 || errorImage.length > 0){
+ 
+      } 
+      setError('')
       setLoading(true)
-
-      if (
-        name.length === 0 ||
-        username.length === 0 ||
-        password.length === 0 ||
-        confirmPassword.length === 0
-      ) {
-        setError('all fields are required')
-        setLoading(false)
-        setProgress(0)
-        return
-      }
+   
 
       const formData = new FormData()
       formData.append('name', name)
@@ -92,17 +89,8 @@ export const Auth = (): JSX.Element => {
       if (image !== null) {
         formData.append('imageProfile', image)
       }
-      if (image === null) {
-        setError('the image is required')
-        return
-      } else {
-        setError('')
-      }
-      if (password !== confirmPassword) {
-        setError('the password is not the same')
-        return
-      }
 
+      console.log(image)
       try {
         const response = await createUser(formData)
         if (response?.id != null) {
@@ -144,11 +132,13 @@ export const Auth = (): JSX.Element => {
   return (
     <section className="bg-gray-50 dark:bg-gray-900 ">
       <Navbar />
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0 ">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-[calc(100vh-67px)] lg:py-0 ">
         <div className="w-full relative bg-white mb-[150px] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
           {loading ? <ProgressBar progress={progress} /> : null}
           <div className="p-6  space-y-4 md:space-y-6 sm:p-8">
-            {error?.length > 0 ? <Alert text={error} className='dark:bg-transparent text-red-600 dark:text-red-600 border border-red-400   px-10 py-2 rounded-lg flex justify-center' /> : null}
+
+            {error?.length > 0  ? <Alert text={error} className='dark:bg-transparent text-red-600 dark:text-red-600 border border-red-400   px-10 py-2 rounded-lg flex justify-center' /> : null}
+
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               {variant === 'login' ? 'Login' : 'Register'}
             </h1>
@@ -167,7 +157,6 @@ export const Auth = (): JSX.Element => {
                     type="text"
                     value={name}
                     onChange={(e) => {
-                      
                       setName(e.target.value)
                     }}
                     placeholder="name"
@@ -175,6 +164,7 @@ export const Auth = (): JSX.Element => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   />
+                  {errorName ? <Alert text={errorName} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
                   <Input
                     id="imageProfile"
                     label="Image Profile"
@@ -188,6 +178,7 @@ export const Auth = (): JSX.Element => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   />
+                  {errorImage ? <Alert text={errorImage} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
                 </>
               )}
               <Input
@@ -203,6 +194,7 @@ export const Auth = (): JSX.Element => {
                 inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               />
+              {errorUsername && variant === 'register' ? <Alert text={errorUsername} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
               <Input
                 id="password"
                 label="Password"
@@ -216,7 +208,9 @@ export const Auth = (): JSX.Element => {
                 inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               />
+              {errorPassword && variant === 'register' ? <Alert text={errorPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
               {variant === 'register' && (
+                <>
                 <Input
                   id="confirmPassword"
                   label="Confirm Password"
@@ -230,6 +224,9 @@ export const Auth = (): JSX.Element => {
                   inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 />
+              {errorConfirmPassword ? <Alert text={errorConfirmPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}  
+              </>
+                
               )}
               <Button
                 type="submit"
