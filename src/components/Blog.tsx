@@ -38,7 +38,7 @@ export const Blog = (): JSX.Element => {
     <>
      <section className='flex justify-center '>
       {
-        copied && <Alert text='✔️ Copied to clipboard' className='bg-gray-700 fixed z-50  px-10 py-2 rounded-lg flex justify-center top-14  animate-fadeindown '/>
+        copied && <Alert text='✔️ Copied to clipboard' className='bg-gray-700 dark:text-white fixed z-50  px-10 py-2 rounded-lg flex justify-center top-14  animate-fadeindown '/>
       }
      </section>
       <Navbar/>

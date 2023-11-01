@@ -47,7 +47,7 @@ export const MyProfile = () => {
             password.length === 0 ||
             confirmPassword.length === 0 
           ) {
-            setError('all fields are required')
+            setError('All fields are required')
             setLoading(false)
             return
           }
@@ -118,7 +118,7 @@ export const MyProfile = () => {
             <article className="flex flex-col gap-3 max-w-screen-xl">
                 {
                     error.length > 0 && (
-                        <Alert text={error} className="bg-red-600  border py-1 min-w-[200px] rounded-[8px] shadow-[0px 0px 5px -3px #111]"/>
+                        <Alert text={error} className="dark:bg-gray-900 text-red-600 dark:text-red-600 border border-red-400   px-10 py-2 rounded-lg flex justify-center"/>
                     )
                 }
                 <Input
