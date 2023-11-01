@@ -30,7 +30,7 @@ export const UserMenu = ({
           setShowNavbar(!showNavbar)
         }}
         type="button"
-        className="inline-flex border-4  shadow-inner items-center  w-[100px] h-10 justify-center text-sm text-gray-600 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="inline-flex border-2  shadow-inner items-center  w-[100px] h-[34px] justify-center text-sm text-gray-600 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
        <img className='object-cover h-full w-[30px] rounded-full' src={user?.imageProfile.secure_url} alt="image profile" />
       </Button>
