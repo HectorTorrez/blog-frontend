@@ -10,7 +10,7 @@ interface useGetBooksProps {
 export const useGetBooks = (): useGetBooksProps => {
   const [blogs, setBlogs] = useState<Blog[]>([])
 
-  const { setUser } = useContext(LoginContext)
+  const { changeUser } = useContext(LoginContext)
 
   const fetchData = async (): Promise<void> => {
     try {
@@ -30,7 +30,7 @@ export const useGetBooks = (): useGetBooksProps => {
   }, [])
   setTimeout(() => {
     localStorage.removeItem('user')
-    setUser(null)
+    changeUser(null)
   }, 3600000)
   return {
     blogs

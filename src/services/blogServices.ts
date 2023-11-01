@@ -1,4 +1,4 @@
-import { type Blog,  type BlogFormValues, type User } from '../types/blogsTypes'
+import { type Blog,  type BlogFormValues,  } from '../types/blogsTypes'
 
 const BASE_URL = 'http://localhost:3003'
 

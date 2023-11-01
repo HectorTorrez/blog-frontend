@@ -53,5 +53,4 @@ export interface BlogFormValues {
   title: string
   author: string
   blogText: string
-  url: string
 }
