@@ -18,7 +18,13 @@ export const Auth = (): JSX.Element => {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState<number>(0)
 
-  const [variant, setVariant] = useState('login')
+  const [variant, setVariant] = useState(() => {
+    const auth = localStorage.getItem('auth')
+    if (auth !== null) {
+      return auth
+    }
+    return 'login'
+  })
 
   const toggleVariant = useCallback(() => {
     setVariant((currentVariant) =>
@@ -31,6 +37,11 @@ export const Auth = (): JSX.Element => {
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    localStorage.setItem('auth', variant)
+  }, [toggleVariant, variant])
+  
 
   const handleLogin = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -128,14 +139,16 @@ export const Auth = (): JSX.Element => {
       }
     }
   }, [progress, loading])
+
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900 ">
       <Navbar />
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0 ">
         <div className="w-full relative bg-white mb-[150px] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
           {loading ? <ProgressBar progress={progress} /> : null}
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            {error?.length > 0 ? <Alert text={error} className='bg-red-600  border py-1 min-w-[200px] rounded-[8px] shadow-[0px 0px 5px -3px #111]' /> : null}
+          <div className="p-6  space-y-4 md:space-y-6 sm:p-8">
+            {error?.length > 0 ? <Alert text={error} className='dark:bg-transparent text-red-600 dark:text-red-600 border border-red-400   px-10 py-2 rounded-lg flex justify-center' /> : null}
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               {variant === 'login' ? 'Login' : 'Register'}
             </h1>
@@ -154,6 +167,7 @@ export const Auth = (): JSX.Element => {
                     type="text"
                     value={name}
                     onChange={(e) => {
+                      
                       setName(e.target.value)
                     }}
                     placeholder="name"

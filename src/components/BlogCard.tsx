@@ -6,6 +6,7 @@ import { Delete, RightArrow } from './Icons'
 import { Link } from 'react-router-dom'
 import { deleteBlog } from '../services/blogServices'
 import { firstLetterUpperCase } from '../utils/firstLetterUpperCase'
+import { SweetAlertConfirm } from '../utils'
 
 interface BlogCardProps {
   blog: Blog
@@ -18,7 +19,20 @@ export const BlogCard = ({ blog, user: BlogUser }: BlogCardProps): JSX.Element =
 
   const handleDelete = async (id: string): Promise<void> => {
     try {
+      const response = await SweetAlertConfirm({
+        title: 'Are you sure?',
+        text: 'You wont be able to revert this',
+        icon: 'warning',
+        confirmButtonText: 'Confirm',
+        titleFire: 'Deleted',
+        bodyFire: 'the blog has been deleted',
+        iconFire: 'success',
+        showCancelButton: true,
+    })
+    if (response.isConfirmed) {
       await deleteBlog(id)
+      window.location.reload()
+      }
     } catch (error) {
       console.log(error)
     }
