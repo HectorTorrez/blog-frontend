@@ -11,8 +11,9 @@ export const MyBlogs = (): JSX.Element => {
   const filter = users.filter((item) => {
     const byUsername = item.username === user?.username
 
-    return byUsername || []
+    return byUsername 
   })
+
   return (
     <section className="dark:bg-gray-900 min-h-screen">
       <Navbar />
