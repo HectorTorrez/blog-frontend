@@ -45,8 +45,7 @@ export const MyProfile = () => {
             name.length === 0 ||
             username.length === 0 ||
             password.length === 0 ||
-            confirmPassword.length === 0 ||
-            imageProfile === null
+            confirmPassword.length === 0 
           ) {
             setError('all fields are required')
             setLoading(false)
@@ -112,14 +111,14 @@ export const MyProfile = () => {
         <Navbar/>
         <form onSubmit={(e) => {
             handleUpdate(e)
-        }} className="max-w-screen-xl flex flex-col items-center dark:bg-gray-900 h-screen gap-5">
+        }} className=" flex flex-col m-auto items-center dark:bg-gray-900 h-screen gap-5">
             <header className="mt-5">
                 <p className="font-bold text-6xl text-blue-600">Profile</p>
             </header>
-            <article className="flex flex-col gap-3">
+            <article className="flex flex-col gap-3 max-w-screen-xl">
                 {
                     error.length > 0 && (
-                        <Alert text={error} type="error"/>
+                        <Alert text={error} className="bg-red-600  border py-1 min-w-[200px] rounded-[8px] shadow-[0px 0px 5px -3px #111]"/>
                     )
                 }
                 <Input
