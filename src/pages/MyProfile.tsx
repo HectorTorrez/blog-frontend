@@ -8,6 +8,7 @@ import { updateUser } from "../services";
 import { Alert } from "../components/Alert";
 import { SweetAlertConfirm } from "../utils";
 import { useNavigate } from "react-router-dom";
+import { useRegisterValidation } from "../hooks/useFormValidation";
 
 export const MyProfile = () => {
 
@@ -15,42 +16,42 @@ export const MyProfile = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState(()=>{
+        const response = localStorage.getItem('imageUrl')
+        if(response === null) return ''
+        return response
+    })
     const [imageProfile, setImageProfile] = useState<File | null>(null)
-    const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
 
 
+    const { loading,  setLoading, errorName, errorUsername, errorPassword, errorConfirmPassword, errorImage, error, setError} = useRegisterValidation({password, confirmPassword, name, username})
 
 
 
     const {user, changeUser} = useContext(LoginContext)
     const navigate = useNavigate()
 
-
+    useEffect(()=>{
+        localStorage.setItem('imageUrl', image)
+    },[user])
 
     useEffect(() => {
         if(user !== null){
             setName(user.name || '')
             setUsername(user.username || '')
             setPassword(user.password || '')
-            setImage(user.imageProfile?.secure_url || '')
+            setImage((prevImage)=>user.imageProfile?.secure_url || prevImage)
         }
-    }, [])
+    }, [image])
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        if (
-            name.length === 0 ||
-            username.length === 0 ||
-            password.length === 0 ||
-            confirmPassword.length === 0 
-          ) {
-            setError('All fields are required')
+        if(errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 ||                  errorConfirmPassword.length > 0 || errorImage.length > 0){
+            setError('please check the fields')
             setLoading(false)
             return
-          }
+        } 
 
           
       const formData = new FormData()
@@ -60,18 +61,7 @@ export const MyProfile = () => {
       if (imageProfile !== null) {
         formData.append('imageProfile', imageProfile)
       }
-      if (image === null) {
-        setError('the image is required')
-        setLoading(false)
-        return
-      } else {
-        setError('')
-      }
-      if (password !== confirmPassword) {
-        setError('the password is not the same')
-        setLoading(false)
-        return
-      }
+   
 
       try {
         if(user === null) return
@@ -132,6 +122,8 @@ export const MyProfile = () => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 />
+                  {errorName ? <Alert text={errorName} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+
                 <section>
                     <article className="flex justify-center mb-3 mt-3">
                         <img className="w-[80px] rounded-full h-[80px] object-cover" src={image} alt="" style={{backgroundImage: 'image.jpg'}} />
@@ -150,6 +142,7 @@ export const MyProfile = () => {
                         labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white  "
                         inputClassName="file:text-gray-900 dark:text-gray-900 file:bg-gray-50 file:px-4 file:py-1 text-white file:dark:bg-gray-700 file:dark:text-white  file:border file:rounded-lg file:dark:text-white file:border-gray-300 file:mt-4"
                     />
+
                 </section>
                 <Input
                     type="text"
@@ -162,6 +155,8 @@ export const MyProfile = () => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 />
+                  {errorUsername ? <Alert text={errorUsername} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+
                 <Input
                     type="password"
                     id="password"
@@ -173,6 +168,8 @@ export const MyProfile = () => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 />
+                  {errorPassword ? <Alert text={errorPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+
                     <Input
                     type="password"
                     id="confirmPassword"
@@ -184,6 +181,8 @@ export const MyProfile = () => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 />
+                  {errorConfirmPassword ? <Alert text={errorConfirmPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+
                 <Button
                     type="submit"
                     className=" w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
