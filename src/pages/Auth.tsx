@@ -4,12 +4,12 @@ import { Alert } from '../components/Alert'
 import {  setToken } from '../services/blogServices'
 import { LoginContext } from '../context/LoginContext'
 import { useNavigate } from 'react-router-dom'
-import { Email, Lock, Photo, Spinner } from '../components/Icons'
+import { Email, Lock, Photo } from '../components/Icons'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 import { ProgressBar } from '../components/ProgressBar'
 import { createUser, login } from '../services'
-import { useRegisterValidation } from '../hooks/useRegisterValidation'
+import { useRegisterValidation } from '../hooks/useFormValidation'
 export const Auth = (): JSX.Element => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
@@ -35,6 +35,7 @@ export const Auth = (): JSX.Element => {
       currentVariant === 'login' ? 'register' : 'login'
     )
     setProgress(0)
+    setError('')
   }, [])
 
   const navigate = useNavigate()
@@ -76,7 +77,7 @@ export const Auth = (): JSX.Element => {
     async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
       e.preventDefault()
       if(errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 || errorConfirmPassword.length > 0 || errorImage.length > 0){
- 
+        setError('please check the fields')
       } 
       setError('')
       setLoading(true)
@@ -90,9 +91,12 @@ export const Auth = (): JSX.Element => {
         formData.append('imageProfile', image)
       }
 
-      console.log(image)
       try {
         const response = await createUser(formData)
+        if(response.error){
+          setError(response.error)
+          return
+        }
         if (response?.id != null) {
           setVariant('login')
         }
@@ -104,7 +108,6 @@ export const Auth = (): JSX.Element => {
         setPassword('')
         setConfirmPassword('')
         setImage(null)
-        setError('')
         setLoading(false)
         setProgress(100)
       }
@@ -133,7 +136,7 @@ export const Auth = (): JSX.Element => {
     <section className="bg-gray-50 dark:bg-gray-900 ">
       <Navbar />
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-[calc(100vh-67px)] lg:py-0 ">
-        <div className="w-full relative bg-white mb-[150px] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+        <div className="w-full relative bg-white  rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
           {loading ? <ProgressBar progress={progress} /> : null}
           <div className="p-6  space-y-4 md:space-y-6 sm:p-8">
 

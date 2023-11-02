@@ -5,7 +5,7 @@ interface useRegisterValidationProps {
     confirmPassword: string
     name: string
     username: string
-    image: File | null
+    image?: File | null
 
 }
 
@@ -25,7 +25,6 @@ export const useRegisterValidation = ({password, confirmPassword, name ,username
         setErrorPassword('')
         setErrorImage('')
         setErrorConfirmPassword('')
-        setError('')
         
 
         if(name.length < 6){
