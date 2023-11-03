@@ -1,8 +1,7 @@
-import { useState, useContext } from 'react';
+import { useState, useContext } from 'react'
 import { useNavigate, Link, NavLink } from 'react-router-dom'
 import { LoginContext } from '../context/LoginContext'
 import { SweetAlertConfirm } from '../utils'
-
 
 import { DarkModeToggle } from './DarkModeToggle'
 import {
@@ -20,7 +19,6 @@ export const Navbar = (): JSX.Element => {
   const { user, changeUser } = useContext(LoginContext)
   const navigate = useNavigate()
 
-
   const handleLogout = async (): Promise<void> => {
     const response = await SweetAlertConfirm({
       title: 'Are you sure?',
@@ -30,7 +28,7 @@ export const Navbar = (): JSX.Element => {
       titleFire: 'Loggedout',
       bodyFire: 'you have been loggedout',
       iconFire: 'success',
-      showCancelButton: true,
+      showCancelButton: true
     })
 
     if (response.isConfirmed) {
@@ -145,7 +143,7 @@ export const Navbar = (): JSX.Element => {
                   </Button>
                 </li>
                 <li className='w-full text-center hidden md:block'>
-                  <UserMenu setShowNavbar={setShowNavbar} showNavbar={showNavbar}  handleLogout={handleLogout}/>
+                  <UserMenu setShowNavbar={setShowNavbar} showNavbar={showNavbar} handleLogout={handleLogout}/>
                 </li>
               </>
                 )}

@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Navbar } from '../components/Navbar'
 import { Alert } from '../components/Alert'
-import {  setToken } from '../services/blogServices'
+import { setToken } from '../services/blogServices'
 import { LoginContext } from '../context/LoginContext'
 import { useNavigate } from 'react-router-dom'
 import { Email, Lock, Photo } from '../components/Icons'
@@ -18,9 +18,8 @@ export const Auth = (): JSX.Element => {
   const [image, setImage] = useState<File | null>(null)
   const [progress, setProgress] = useState<number>(0)
   const { changeUser } = useContext(LoginContext)
-  
 
-  const { loading,  setLoading, errorName, errorUsername, errorPassword, errorConfirmPassword, errorImage, error, setError} = useRegisterValidation({password, confirmPassword, name, username, image})
+  const { loading, setLoading, errorName, errorUsername, errorPassword, errorConfirmPassword, errorImage, error, setError } = useRegisterValidation({ password, confirmPassword, name, username, image })
 
   const [variant, setVariant] = useState(() => {
     const auth = localStorage.getItem('auth')
@@ -40,13 +39,9 @@ export const Auth = (): JSX.Element => {
 
   const navigate = useNavigate()
 
-
-
-
   useEffect(() => {
     localStorage.setItem('auth', variant)
   }, [toggleVariant, variant])
-  
 
   const handleLogin = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,12 +71,11 @@ export const Auth = (): JSX.Element => {
   const handleRegister = useCallback(
     async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
       e.preventDefault()
-      if(errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 || errorConfirmPassword.length > 0 || errorImage.length > 0){
+      if (errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 || errorConfirmPassword.length > 0 || errorImage.length > 0) {
         setError('please check the fields')
-      } 
+      }
       setError('')
       setLoading(true)
-   
 
       const formData = new FormData()
       formData.append('name', name)
@@ -93,7 +87,7 @@ export const Auth = (): JSX.Element => {
 
       try {
         const response = await createUser(formData)
-        if(response.error){
+        if (response.error.length > 0) {
           setError(response.error)
           return
         }
@@ -131,7 +125,6 @@ export const Auth = (): JSX.Element => {
     }
   }, [progress, loading])
 
-
   return (
     <section className="bg-gray-50 dark:bg-gray-900 ">
       <Navbar />
@@ -140,7 +133,7 @@ export const Auth = (): JSX.Element => {
           {loading ? <ProgressBar progress={progress} /> : null}
           <div className="p-6  space-y-4 md:space-y-6 sm:p-8">
 
-            {error?.length > 0  ? <Alert text={error} className='dark:bg-transparent text-red-600 dark:text-red-600 border border-red-400   px-10 py-2 rounded-lg flex justify-center' /> : null}
+            {error?.length > 0 ? <Alert text={error} className='dark:bg-transparent text-red-600 dark:text-red-600 border border-red-400   px-10 py-2 rounded-lg flex justify-center' /> : null}
 
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               {variant === 'login' ? 'Login' : 'Register'}
@@ -167,7 +160,7 @@ export const Auth = (): JSX.Element => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   />
-                  {errorName ? <Alert text={errorName} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+                  {(errorName.length > 0) ? <Alert text={errorName} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
                   <Input
                     id="imageProfile"
                     label="Image Profile"
@@ -181,7 +174,7 @@ export const Auth = (): JSX.Element => {
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   />
-                  {errorImage ? <Alert text={errorImage} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+                  {(errorImage.length > 0) ? <Alert text={errorImage} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
                 </>
               )}
               <Input
@@ -197,7 +190,7 @@ export const Auth = (): JSX.Element => {
                 inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               />
-              {errorUsername && variant === 'register' ? <Alert text={errorUsername} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+              {(errorUsername.length > 0) && variant === 'register' ? <Alert text={errorUsername} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
               <Input
                 id="password"
                 label="Password"
@@ -211,7 +204,7 @@ export const Auth = (): JSX.Element => {
                 inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               />
-              {errorPassword && variant === 'register' ? <Alert text={errorPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
+              {(errorPassword.length > 0) && variant === 'register' ? <Alert text={errorPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
               {variant === 'register' && (
                 <>
                 <Input
@@ -227,9 +220,9 @@ export const Auth = (): JSX.Element => {
                   inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   labelClassName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 />
-              {errorConfirmPassword ? <Alert text={errorConfirmPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}  
+              {(errorConfirmPassword.length > 0) ? <Alert text={errorConfirmPassword} className='dark:bg-transparent text-red-600 dark:text-red-60' /> : null}
               </>
-                
+
               )}
               <Button
                 type="submit"
@@ -249,7 +242,7 @@ export const Auth = (): JSX.Element => {
                   {variant === 'login' ? 'Create an account' : 'Login'}
                 </span>
               </p>
-            </form>  
+            </form>
           </div>
         </div>
       </div>

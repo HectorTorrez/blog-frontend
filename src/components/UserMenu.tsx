@@ -20,7 +20,6 @@ export const UserMenu = ({
   showNavbar,
   handleLogout
 }: UserMenuProps): JSX.Element => {
-
   const { user } = useContext(LoginContext)
 
   return (

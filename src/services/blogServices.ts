@@ -1,4 +1,4 @@
-import { type Blog,  type BlogFormValues,  } from '../types/blogsTypes'
+import { type Blog, type BlogFormValues } from '../types/blogsTypes'
 
 const BASE_URL = 'http://localhost:3003'
 
@@ -17,8 +17,6 @@ export const getBlog = async (id: string): Promise<Blog> => {
   const response = await fetch(`${BASE_URL}/api/blogs/${id}`)
   return await response.json()
 }
-
-
 
 export const createBlog = async (blog: BlogFormValues): Promise<any> => {
   if (token != null) {

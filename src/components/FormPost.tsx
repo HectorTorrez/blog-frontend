@@ -23,7 +23,6 @@ export const FormPost = (): JSX.Element => {
       blogText: ''
     })
   }, [])
-  
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     setBlog({ ...blog, [event.target.name]: event.target.value })
@@ -33,7 +32,7 @@ export const FormPost = (): JSX.Element => {
     try {
       setToken(user?.token as string)
       const response = await createBlog(blog)
-      if(response === 'jwt expired'){
+      if (response === 'jwt expired') {
         const response = await SweetAlertConfirm({
           title: 'Logout',
           text: 'Your session has expired, please login again',
@@ -42,9 +41,9 @@ export const FormPost = (): JSX.Element => {
           titleFire: 'Logout',
           bodyFire: 'Your session has expired, please login again',
           iconFire: 'success',
-          showCancelButton: false,
-      })
-      if (response.isConfirmed) {
+          showCancelButton: false
+        })
+        if (response.isConfirmed) {
           changeUser(null)
 
           navigate('/')
@@ -78,7 +77,7 @@ export const FormPost = (): JSX.Element => {
 
               <div className="sm:col-span-2">
                   <label htmlFor="blogText" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Blog description</label>
-                  <textarea onChange={handleChange} value={blog.blogText}  id="description" name='blogText' className="block p-2.5 w-full h-[200px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500" placeholder="Your text here"></textarea>
+                  <textarea onChange={handleChange} value={blog.blogText} id="description" name='blogText' className="block p-2.5 w-full h-[200px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500" placeholder="Your text here"></textarea>
               </div>
           </div>
           <button type="submit" className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">

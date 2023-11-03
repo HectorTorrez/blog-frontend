@@ -11,9 +11,10 @@ import { SweetAlertConfirm } from '../utils'
 interface BlogCardProps {
   blog: Blog
   user?: string
+  onRefresh?: () => void
 }
 
-export const BlogCard = ({ blog, user: BlogUser }: BlogCardProps): JSX.Element => {
+export const BlogCard = ({ blog, user: BlogUser, onRefresh }: BlogCardProps): JSX.Element => {
   const { title, author, blogText, id } = blog
   const { user } = useContext(LoginContext)
 
@@ -27,14 +28,15 @@ export const BlogCard = ({ blog, user: BlogUser }: BlogCardProps): JSX.Element =
         titleFire: 'Deleted',
         bodyFire: 'the blog has been deleted',
         iconFire: 'success',
-        showCancelButton: true,
-    })
-    if (response.isConfirmed) {
-      await deleteBlog(id)
-      window.location.reload()
+        showCancelButton: true
+      })
+      if (response.isConfirmed) {
+        await deleteBlog(id)
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      onRefresh?.()
     }
   }
 

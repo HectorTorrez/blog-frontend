@@ -43,7 +43,7 @@ const router = createBrowserRouter([
   {
     path: '*',
     element: <Error/>
-  },
+  }
 ])
 
 const rootElement = document.getElementById('root')

@@ -27,7 +27,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }): JSX.Elemen
     }
   )
 
-  const changeUser = (newState: LoginWithToken | null) => {
+  const changeUser = (newState: LoginWithToken | null): void => {
     setUser(newState)
   }
 

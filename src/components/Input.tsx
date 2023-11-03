@@ -5,8 +5,8 @@ interface InputProps {
   value?: string | number | readonly string[] | undefined
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
-  type: string,
-  inputClassName: string,
+  type: string
+  inputClassName: string
   labelClassName: string
 }
 

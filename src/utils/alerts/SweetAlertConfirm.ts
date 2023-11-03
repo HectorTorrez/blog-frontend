@@ -14,10 +14,10 @@ export const SweetAlertConfirm = async ({ title, text, icon, confirmButtonText, 
     title,
     text,
     icon,
-    showCancelButton: showCancelButton,
+    showCancelButton,
     confirmButtonColor: '#2563eb',
     cancelButtonColor: '#ff2100',
-    confirmButtonText,
+    confirmButtonText
   }).then((result) => {
     if (result.isConfirmed) {
       void Swal.fire(
