@@ -6,7 +6,7 @@ interface useGetUsersProps {
   users: User[]
 }
 
-export const useGetUsers = (): useGetUsersProps => {
+export const useGetUsers = (refresh?: boolean): useGetUsersProps => {
   const [users, setUsers] = useState<User[]>([])
 
   const getALlUsers = async (): Promise<void> => {
@@ -14,13 +14,13 @@ export const useGetUsers = (): useGetUsersProps => {
       const response = await getUsers()
       setUsers(response)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
   useEffect(() => {
     void getALlUsers()
-  }, [])
+  }, [refresh])
 
   return {
     users

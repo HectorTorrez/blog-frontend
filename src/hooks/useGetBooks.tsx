@@ -5,10 +5,10 @@ import { type Blog } from '../types/blogsTypes'
 
 interface useGetBooksProps {
   blogs: Blog[]
-  refresh?: boolean
+
 }
 
-export const useGetBooks = (refresh: boolean): useGetBooksProps => {
+export const useGetBooks = (): useGetBooksProps => {
   const [blogs, setBlogs] = useState<Blog[]>([])
 
   const { changeUser } = useContext(LoginContext)
@@ -28,7 +28,7 @@ export const useGetBooks = (refresh: boolean): useGetBooksProps => {
       const user = JSON.parse(token as string).token
       setToken(user.token)
     }
-  }, [refresh])
+  }, [])
 
   setTimeout(() => {
     localStorage.removeItem('user')

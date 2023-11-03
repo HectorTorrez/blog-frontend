@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { BlogCard } from './components/BlogCard'
 import { Navbar } from './components/Navbar'
 import { Link } from 'react-router-dom'
@@ -6,15 +6,9 @@ import { LoginContext } from './context/LoginContext'
 import { useGetBooks } from './hooks/useGetBooks'
 
 export const App = (): JSX.Element => {
-  const [refresh, setRefresh] = useState(false)
   const { user } = useContext(LoginContext)
 
-  const { blogs } = useGetBooks(refresh)
-
-  const handleRefresh = (): void => {
-    console.log('here')
-    setRefresh(!refresh)
-  }
+  const { blogs } = useGetBooks()
 
   return (
     <section className='dark:bg-gray-900 min-h-screen'>
@@ -31,7 +25,7 @@ export const App = (): JSX.Element => {
     </div>
       <main className='max-w-screen-xl flex justify-center flex-wrap gap-10 items-center  mx-auto mt-10'>
         {blogs?.map((blog) => {
-          return <BlogCard key={blog.id} blog={blog} onRefresh={handleRefresh} />
+          return <BlogCard key={blog.id} blog={blog} />
         })}
       </main>
     </section>
