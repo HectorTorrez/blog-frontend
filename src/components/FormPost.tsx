@@ -53,7 +53,7 @@ export const FormPost = (): JSX.Element => {
         navigate('/')
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   return (
