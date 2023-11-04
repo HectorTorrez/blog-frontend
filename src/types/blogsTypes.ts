@@ -2,7 +2,7 @@ export interface Blog {
   title: string
   author: string
   blogText: string
-  user: User[]
+  user: UserForBlog[]
   id: string
 }
 

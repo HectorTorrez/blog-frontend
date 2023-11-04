@@ -13,6 +13,7 @@ export const Blog = (): JSX.Element => {
   const [blog, setBlog] = useState<blog>()
   const [copied, setCopied] = useState(false)
   const { blogId } = useParams<{ blogId: string }>()
+
   const get = async (): Promise<void> => {
     if (blogId !== undefined) {
       const data = await getBlog(blogId)
