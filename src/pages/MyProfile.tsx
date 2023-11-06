@@ -90,7 +90,7 @@ export const MyProfile = (): JSX.Element => {
   return (
     <section>
         <Navbar/>
-        <form onSubmit={(e) => {
+        <form data-cy="submit" onSubmit={(e) => {
           void handleUpdate(e)
         }} className=" flex flex-col m-auto items-center dark:bg-gray-900 h-screen gap-5">
             <header className="mt-5">
@@ -105,6 +105,7 @@ export const MyProfile = (): JSX.Element => {
                 <Input
                     type="text"
                     id="name"
+                    dataCy='name'
                     placeholder="Name"
                     label="Name"
                     value={name}
@@ -122,6 +123,7 @@ export const MyProfile = (): JSX.Element => {
                     <Input
                         type="file"
                         id="imageProfile"
+                        dataCy='file'
                         placeholder="Image Profile"
                         label="Image Profile"
                         onChange={(e) => {
@@ -138,6 +140,7 @@ export const MyProfile = (): JSX.Element => {
                 <Input
                     type="text"
                     id="username"
+                    dataCy='username'
                     placeholder="Username"
                     label="Username"
                     value={username}
@@ -151,6 +154,7 @@ export const MyProfile = (): JSX.Element => {
                 <Input
                     type="password"
                     id="password"
+                    dataCy='password'
                     placeholder="••••••••"
                     label="Password"
                     value={password}
@@ -164,6 +168,7 @@ export const MyProfile = (): JSX.Element => {
                     <Input
                     type="password"
                     id="confirmPassword"
+                    dataCy='confirmPassword'
                     placeholder="••••••••"
                     label="Confirm Passowrd"
                     value={confirmPassword}

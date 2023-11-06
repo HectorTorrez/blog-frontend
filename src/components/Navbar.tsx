@@ -53,6 +53,7 @@ export const Navbar = (): JSX.Element => {
           <>
             <NavLink
               to="/auth"
+              data-cy="loginMobile"
               className={({ isActive }) =>
                 isActive ? activeLinkMobile : inactiveLinkMobile
               }
@@ -86,6 +87,7 @@ export const Navbar = (): JSX.Element => {
             <li className="w-full text-center">
               <NavLink
                 to="/"
+                data-cy="home"
                 className={({ isActive }) =>
                   isActive ? activeLink : inactiveLink
                 }
@@ -100,6 +102,7 @@ export const Navbar = (): JSX.Element => {
                 <li className="w-full text-center">
                   <NavLink
                     to="/auth"
+                    data-cy='loginDesktop'
                     className={({ isActive }) =>
                       isActive ? activeLink : inactiveLink
                     }
@@ -114,6 +117,7 @@ export const Navbar = (): JSX.Element => {
                 <li className="w-full text-center">
                   <NavLink
                     to="/myblogs"
+                    data-cy="myBlogs"
                     className={({ isActive }) =>
                       isActive ? activeLink : inactiveLink
                     }

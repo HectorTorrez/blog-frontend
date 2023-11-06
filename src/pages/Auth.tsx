@@ -10,12 +10,19 @@ import { Button } from '../components/Button'
 import { ProgressBar } from '../components/ProgressBar'
 import { createUser, login } from '../services'
 import { useRegisterValidation } from '../hooks/useFormValidation'
+import { saveImageToLocalStorage } from '../utils/saveImageToLocalstorage'
 export const Auth = (): JSX.Element => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [image, setImage] = useState<File | null>(null)
+  // TODO FIX IMAGE IN LOCALSTORAGE
+  const [image, setImage] = useState<File | null | string>(() => {
+    const response = localStorage.getItem('image')
+    if (response === null) return null
+    return response
+  })
+
   const [progress, setProgress] = useState<number>(0)
   const { changeUser } = useContext(LoginContext)
 
@@ -73,6 +80,7 @@ export const Auth = (): JSX.Element => {
       e.preventDefault()
       if (errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 || errorConfirmPassword.length > 0 || errorImage.length > 0) {
         setError('please check the fields')
+        return
       }
       setError('')
       setLoading(true)
@@ -139,6 +147,7 @@ export const Auth = (): JSX.Element => {
               {variant === 'login' ? 'Login' : 'Register'}
             </h1>
             <form
+              data-cy="submit"
               onSubmit={(e) => {
                 void (variant === 'login' ? handleLogin(e) : handleRegister(e))
               }}
@@ -155,6 +164,7 @@ export const Auth = (): JSX.Element => {
                     onChange={(e) => {
                       setName(e.target.value)
                     }}
+                    dataCy="name"
                     placeholder="name"
                     icon={<Email />}
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -165,10 +175,12 @@ export const Auth = (): JSX.Element => {
                     id="imageProfile"
                     label="Image Profile"
                     type="file"
+                    dataCy="file"
                     onChange={(e) => {
                       const { files } = e.target
                       if (files === null) return
                       setImage(files[0])
+                      saveImageToLocalStorage(files[0])
                     }}
                     icon={<Photo />}
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -181,6 +193,7 @@ export const Auth = (): JSX.Element => {
                 id="username"
                 label="Username"
                 type="text"
+                dataCy="username"
                 value={username}
                 onChange={(e) => {
                   setUsername(e.target.value)
@@ -195,6 +208,7 @@ export const Auth = (): JSX.Element => {
                 id="password"
                 label="Password"
                 type="password"
+                dataCy="password"
                 onChange={(e) => {
                   setPassword(e.target.value)
                 }}
@@ -211,6 +225,7 @@ export const Auth = (): JSX.Element => {
                   id="confirmPassword"
                   label="Confirm Password"
                   type="password"
+                dataCy="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => {
                     setConfirmPassword(e.target.value)
@@ -236,6 +251,7 @@ export const Auth = (): JSX.Element => {
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{' '}
                 <span
+                  data-cy="toggleVariant"
                   onClick={toggleVariant}
                   className="font-medium text-gray-600 hover:underline dark:text-gray-500 cursor-pointer"
                 >

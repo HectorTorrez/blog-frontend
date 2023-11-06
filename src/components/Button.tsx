@@ -3,12 +3,14 @@ interface ButtonProps {
   type: 'button' | 'submit' | 'reset'
   className: string
   children: React.ReactNode
+  dataCy?: string
 }
 
-export const Button = ({ onClick, type, className, children }: ButtonProps): JSX.Element => {
+export const Button = ({ onClick, type, className, children, dataCy }: ButtonProps): JSX.Element => {
   return (
     <div className="relative">
         <button
+         data-cy={dataCy}
          onClick={onClick}
          type={type}
          className={className}

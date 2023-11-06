@@ -25,6 +25,7 @@ export const UserMenu = ({
   return (
     <div>
       <Button
+        dataCy='userMenu'
         onClick={() => {
           setShowNavbar(!showNavbar)
         }}
@@ -62,6 +63,7 @@ export const UserMenu = ({
                 <li className="w-full text-center">
                   <NavLink
                     to="/profile"
+                    data-cy='profile'
                     className={({ isActive }) =>
                       isActive ? activeLink : inactiveLink
                     }
@@ -75,6 +77,7 @@ export const UserMenu = ({
                       void handleLogout()
                     }}
                     type="button"
+                    dataCy='logout'
                     className={inactiveLink}
                   >
                     Logout
