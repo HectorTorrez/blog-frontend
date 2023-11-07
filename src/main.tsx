@@ -13,6 +13,7 @@ import { Error } from './pages/Error.tsx'
 import { MyBlogs } from './pages/MyBlogs.tsx'
 import { Auth } from './pages/Auth.tsx'
 import { MyProfile } from './pages/MyProfile.tsx'
+import { ForgotPassword } from './pages/ForgotPassword.tsx'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: '/auth',
     element: <Auth/>
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword/>
   },
   {
     path: '/create-blog',

@@ -21,6 +21,12 @@ export interface User {
   error: string
 }
 
+export interface UserForResetPassword {
+  username: string
+  id: string
+  error: string
+}
+
 export interface BlogForUser {
   title: string
   author: string
