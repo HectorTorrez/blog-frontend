@@ -3,26 +3,21 @@ import { Navbar } from '../components/Navbar'
 import { Alert } from '../components/Alert'
 import { setToken } from '../services/blogServices'
 import { LoginContext } from '../context/LoginContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Email, Lock, Photo } from '../components/Icons'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 import { ProgressBar } from '../components/ProgressBar'
 import { createUser, login } from '../services'
 import { useRegisterValidation } from '../hooks/useFormValidation'
-import { saveImageToLocalStorage } from '../utils/saveImageToLocalstorage'
+
 export const Auth = (): JSX.Element => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   // TODO FIX IMAGE IN LOCALSTORAGE
-  const [image, setImage] = useState<File | null | string>(() => {
-    const response = localStorage.getItem('image')
-    if (response === null) return null
-    return response
-  })
-
+  const [image, setImage] = useState<File | null >(null)
   const [progress, setProgress] = useState<number>(0)
   const { changeUser } = useContext(LoginContext)
 
@@ -48,6 +43,13 @@ export const Auth = (): JSX.Element => {
 
   useEffect(() => {
     localStorage.setItem('auth', variant)
+    if (variant === 'login') {
+      setName('')
+      setUsername('')
+      setPassword('')
+      setConfirmPassword('')
+      setImage(null)
+    }
   }, [toggleVariant, variant])
 
   const handleLogin = useCallback(
@@ -75,47 +77,54 @@ export const Auth = (): JSX.Element => {
     [navigate, password, changeUser, username]
   )
 
-  const handleRegister = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-      e.preventDefault()
-      if (errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 || errorConfirmPassword.length > 0 || errorImage.length > 0) {
-        setError('please check the fields')
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault()
+    if (errorName.length > 0 || errorUsername.length > 0 || errorPassword.length > 0 || errorConfirmPassword.length > 0 || errorImage.length > 0) {
+      setError('please check the fields')
+      setLoading(false)
+      return
+    }
+
+    setError('')
+    setLoading(true)
+
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('username', username)
+    formData.append('password', password)
+    if (image !== null) {
+      formData.append('imageProfile', image)
+    }
+
+    try {
+      const response = await createUser(formData)
+      if (response.error.length > 0) {
+        setError(response.error)
         return
       }
-      setError('')
-      setLoading(true)
 
-      const formData = new FormData()
-      formData.append('name', name)
-      formData.append('username', username)
-      formData.append('password', password)
-      if (image !== null) {
-        formData.append('imageProfile', image)
+      if (response.error.length > 0) {
+        setError(response.error)
+        return
       }
 
-      try {
-        const response = await createUser(formData)
-        if (response.error.length > 0) {
-          setError(response.error)
-          return
-        }
-        if (response?.id != null) {
-          setVariant('login')
-        }
-      } catch (error: any) {
-        throw new Error(error)
-      } finally {
-        setName('')
-        setUsername('')
-        setPassword('')
-        setConfirmPassword('')
-        setImage(null)
-        setLoading(false)
-        setProgress(100)
+      if (response?.id != null) {
+        setVariant('login')
       }
-    },
-    [name, password, username, confirmPassword, navigate, handleLogin]
-  )
+    } catch (error: any) {
+      setImage(null)
+      throw new Error(error.message)
+    } finally {
+      setName('')
+      setUsername('')
+      setPassword('')
+      setConfirmPassword('')
+      setImage(null)
+      setLoading(false)
+      setProgress(100)
+      setVariant('login')
+    }
+  }
 
   useEffect(() => {
     if (loading) {
@@ -176,11 +185,13 @@ export const Auth = (): JSX.Element => {
                     label="Image Profile"
                     type="file"
                     dataCy="file"
+                    onClick={(e) => {
+                      setImage(null)
+                      e.currentTarget.value = null
+                    }}
                     onChange={(e) => {
-                      const { files } = e.target
-                      if (files === null) return
-                      setImage(files[0])
-                      saveImageToLocalStorage(files[0])
+                      const file = e.target.files?.[0]
+                      setImage(file ?? null)
                     }}
                     icon={<Photo />}
                     inputClassName="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -248,7 +259,7 @@ export const Auth = (): JSX.Element => {
                 {variant === 'login' ? 'Login' : 'Register'}
               </Button>
 
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400    ">
                 Don’t have an account yet?{' '}
                 <span
                   data-cy="toggleVariant"
@@ -258,6 +269,7 @@ export const Auth = (): JSX.Element => {
                   {variant === 'login' ? 'Create an account' : 'Login'}
                 </span>
               </p>
+              <Link className='font-medium text-gray-600 hover:underline dark:text-gray-500 cursor-pointer inline-blog mt-3' to='/forgot-password'>Forgot Password?</Link>
             </form>
           </div>
         </div>

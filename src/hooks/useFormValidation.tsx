@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 interface useRegisterValidationProps {
   password: string
   confirmPassword: string
-  name: string
+  name?: string
   username: string
   image?: File | null
 
@@ -37,7 +37,7 @@ export const useRegisterValidation = ({ password, confirmPassword, name, usernam
     setErrorImage('')
     setErrorConfirmPassword('')
 
-    if (name.length < 6) {
+    if (name !== undefined && name.length < 6) {
       setErrorName('Name must be at least 6 characters')
       setLoading(false)
       return

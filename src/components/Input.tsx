@@ -9,9 +9,10 @@ interface InputProps {
   inputClassName: string
   labelClassName: string
   dataCy?: string
+  onClick?: (arg: any) => void
 }
 
-export const Input = ({ id, icon, label, value, onChange, placeholder, type, inputClassName, labelClassName, dataCy }: InputProps): JSX.Element => {
+export const Input = ({ id, icon, label, value, onChange, placeholder, type, inputClassName, labelClassName, dataCy, onClick }: InputProps): JSX.Element => {
   return (
     <label
     htmlFor={id}
@@ -24,6 +25,7 @@ export const Input = ({ id, icon, label, value, onChange, placeholder, type, inp
       </div>
       <input
         type={type}
+        onClick={onClick}
         onChange={onChange}
         value={value}
         id={id}
