@@ -119,6 +119,7 @@ export const ForgotPassword = (): JSX.Element => {
                 void (variant === 'getUser' ? findUser(e) : handleUpdatePassword(e))
               }}
               className="space-y-4 md:space-y-6"
+              data-cy="submit"
             >
               <>
                 <Input

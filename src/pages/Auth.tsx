@@ -269,7 +269,7 @@ export const Auth = (): JSX.Element => {
                   {variant === 'login' ? 'Create an account' : 'Login'}
                 </span>
               </p>
-              <Link className='font-medium text-gray-600 hover:underline dark:text-gray-500 cursor-pointer inline-blog mt-3' to='/forgot-password'>Forgot Password?</Link>
+              <Link data-cy="forgotPassword" className='font-medium  text-gray-600 hover:underline dark:text-gray-500 cursor-pointer inline-blog mt-3' to='/forgot-password'>Forgot Password?</Link>
             </form>
           </div>
         </div>
