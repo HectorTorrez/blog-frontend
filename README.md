@@ -1,27 +1,16 @@
-# React + TypeScript + Vite
+# Blog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a blog, where you can add, edit and delete posts. I used React, Node.js, Express, MongoDB.
 
-Currently, two official plugins are available:
+Link to project: https://blog-ht.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+How It's Made: Tech used: Typescript, React, TailwindCSS
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![blog](https://github.com/HectorTorrez/blog-frontend/assets/69362017/6097b58b-c5e7-4c5e-a44a-fa0149f01367)
 
-- Configure the top-level `parserOptions` property like this:
+I made my own backend with Node.js Express and MongoDB and decided to create this website to keep improving my front end skills.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### Backend
+https://github.com/HectorTorrez/blog-backend
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
