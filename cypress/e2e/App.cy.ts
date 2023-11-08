@@ -1,9 +1,4 @@
 /// <reference types="cypress" />
-import { getBlogs } from '../../src/services/blogServices';
-
-beforeEach(() => {
-
-})
 
 describe('App', () => {
   const URL = 'http://localhost:5173';
@@ -114,8 +109,9 @@ describe('when an user is logged in', () => {
 
     cy.get('[data-cy="loginDesktop"]').click()
     cy.url().should('include', URLAUTH)
-
+    cy.get('[data-cy="username"]').should('exist')
     cy.get('[data-cy="username"]').type('hector')
+    cy.get('[data-cy="password"]').should('exist')
     cy.get('[data-cy="password"]').type('123456')
     cy.get('[data-cy="submit"]').submit()
     cy.url().should('include', URL)
@@ -157,11 +153,39 @@ describe('the user should not be able to register', () => {
 
     cy.get('[data-cy="name"]').type('Hector')
     cy.get('input[type=file]').selectFile('cypress/images/profilePhoto.png')
-    cy.get('[data-cy="username"]').type('hector')
+  cy.get('[data-cy="username"]').type('hector')
     cy.get('[data-cy="password"]').type('123456')
     cy.get('[data-cy="confirmPassword"]').type('1234567')
     cy.get('[data-cy="submit"]').submit()
 
   })
+})
 
+describe('the user should change the password', () => {
+  it('should change the password', () => {
+    const URLAUTH = 'http://localhost:5173/auth';
+    cy.visit(URLAUTH);
+    cy.get('[data-cy="forgotPassword"]').click()
+    cy.contains('h3', 'Forgot Password')
+    cy.get('[data-cy="username"]').type('hector')
+    cy.get('[data-cy="submit"]').submit()
+
+    cy.get('[data-cy="password"]').should('exist')
+    cy.get('[data-cy="password"]').type('123456')
+    cy.get('[data-cy="confirmPassword"]').should('exist')
+    cy.get('[data-cy="confirmPassword"]').type('123456')
+    cy.get('[data-cy="submit"]').submit()
+
+  })
+
+  it('should not change the password', () => {
+    const URLAUTH = 'http://localhost:5173/auth';
+    cy.visit(URLAUTH);
+    cy.get('[data-cy="forgotPassword"]').click()
+    cy.contains('h3', 'Forgot Password')
+    cy.get('[data-cy="username"]').type('abc')
+    cy.get('[data-cy="submit"]').submit()
+    cy.contains('p', 'User not found')
+  
+  })
 })
