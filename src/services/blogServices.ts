@@ -1,6 +1,6 @@
 import { type Blog, type BlogFormValues } from '../types/blogsTypes'
 
-const BASE_URL = 'http://localhost:3003'
+const BASE_URL = 'https://blog-backend-dev-jmpn.3.us-1.fl0.io'
 
 let token: string | null = null
 

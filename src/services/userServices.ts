@@ -1,6 +1,6 @@
 import { type UserForResetPassword, type LoginCredentials, type LoginWithToken, type User } from '../types/blogsTypes'
 
-const BASE_URL = 'http://localhost:3003'
+const BASE_URL = 'https://blog-backend-dev-jmpn.3.us-1.fl0.io'
 
 export const getUsers = async (): Promise<User[]> => {
   const response = await fetch(`${BASE_URL}/api/users`)
